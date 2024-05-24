@@ -1,0 +1,3 @@
+[submodule "models/tamil_ocr"]
+	path = models/tamil_ocr
+	url = https://github.com/gnana70/tamil_ocr.git
