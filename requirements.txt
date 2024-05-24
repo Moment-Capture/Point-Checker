@@ -1,0 +1,7 @@
+PyMuPDF
+pandas
+pandastable
+urllib3==1.26.7
+requests
+public_ip
+openpyxl
