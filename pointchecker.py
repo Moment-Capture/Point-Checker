@@ -99,9 +99,9 @@ def getMulSubDf(testee_path):
     return df
 
 
-def pointchecker(upload_path, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
+def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
     # 경로 정의
-    path = str(Path(upload_path))
+    path = str(Path(id_path))
     jpg_path = path + "/jpg"
     temp_path = path + "/temp"
 
@@ -266,7 +266,7 @@ def pointchecker(upload_path, pdf_path, test_name, copy_num, total_qna_num, test
 
     df.to_excel(path+"/final_df.xlsx")
 
-    # 응시자별 폴더 삭제
-    deleteFolder(testee_path)
+    # temp 폴더 삭제
+    deleteFolder(temp_path)
 
     return df
