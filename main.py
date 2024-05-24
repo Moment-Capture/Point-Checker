@@ -13,8 +13,9 @@ import datetime
 import public_ip as ip
 import pandas as pd
 from pandastable import Table
-
 from io import StringIO
+
+from data import *
 
 ##########################################################
 ##########################################################
@@ -92,7 +93,6 @@ def start_connect(pdf_path, test_name, copy_num, total_qna_num, testee_num, test
 def post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
     global client_id
 
-    post_url = url + "/upload"
     client_id = getId()
 
     data = {
@@ -106,10 +106,11 @@ def post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_c
 
     files = {
         'pdf':open(pdf_path, "rb"),
-        'data':(None, json.dumps(data), 'application/json')
     }
 
-    return requests.post(post_url, files=files)
+    json_data = getJsonData(client_id, data, files)
+
+    return json_data
 
 
 
