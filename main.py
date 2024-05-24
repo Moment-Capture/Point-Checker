@@ -7,13 +7,12 @@ from tkinter import *
 import os
 import fitz
 import json
-import requests
 import datetime
 
 import public_ip as ip
 import pandas as pd
 from pandastable import Table
-from io import StringIO
+# from io import StringIO
 
 from data import *
 
@@ -77,12 +76,7 @@ def getId():
 ## 서버 연결하는 함수 ##
 def start_connect(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
     global json_data
-    response = post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
-    json_data = json.loads(response.text)
-    
-    df = pd.json_normalize(json_data)
-    df.drop(columns=["file"], inplace=True)
-    df.set_index(["testee_id", "num"], inplace=True)
+    json_data = post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
 
     set_global(json_data)
 
@@ -95,20 +89,7 @@ def post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_c
 
     client_id = getId()
 
-    data = {
-        'client_id':client_id,
-        'test_name':test_name,
-        'copy_num':copy_num,
-        'total_qna_num':total_qna_num,
-        'testee_num':testee_num,
-        'test_category':test_category
-    }
-
-    files = {
-        'pdf':open(pdf_path, "rb"),
-    }
-
-    json_data = getJsonData(client_id, data, files)
+    json_data = getJsonData(client_id, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
 
     return json_data
 
@@ -748,8 +729,6 @@ def show_result():
     root2 = tk.Toplevel()
 
     data = json_data
-
-    print(data)
 
     # Create the PandasViewer instance
     viewer = PandasViewer(root2, dataframe=json_to_df_for_tables(data))

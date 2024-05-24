@@ -99,7 +99,7 @@ def getMulSubDf(testee_path):
     return df
 
 
-def pointchecker(upload_path, test_name, copy_num, total_qna_num, testee_num, test_category):
+def pointchecker(upload_path, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
     # 경로 정의
     path = str(Path(upload_path))
     jpg_path = path + "/jpg"
@@ -118,7 +118,8 @@ def pointchecker(upload_path, test_name, copy_num, total_qna_num, testee_num, te
 
     # pdf 파일 탐지
     original_pdf_file_path_list = []
-    original_pdf_file_path_list = os_sorted(Path(path).glob('*.pdf'))
+    # original_pdf_file_path_list = os_sorted(Path(path).glob('*.pdf'))
+    original_pdf_file_path_list.append(pdf_path)
     
     # pdf 파일 있는지 검사
     if len(original_pdf_file_path_list) == 0:

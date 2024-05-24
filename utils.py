@@ -9,7 +9,6 @@ import pandas as pd
 
 from pathlib import Path
 from natsort import os_sorted
-from flask import request
 
 from pdf2image import convert_from_path
 from PIL import Image
@@ -253,14 +252,14 @@ def makeIdFolder(upload_path):
     makeFolder(temp_path)
 
 
-# id 생성
-def getId():
-    client_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-    access_now = datetime.datetime.now()
-    access_date = access_now.strftime("%Y-%m-%d")
-    access_time = access_now.strftime("%H-%M-%S")
-    id = client_ip + "_" + access_date + "_" + access_time
-    return id
+# # id 생성
+# def getId():
+#     client_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+#     access_now = datetime.datetime.now()
+#     access_date = access_now.strftime("%Y-%m-%d")
+#     access_time = access_now.strftime("%H-%M-%S")
+#     id = client_ip + "_" + access_date + "_" + access_time
+#     return id
 
 
 # ocr_text에서 숫자만 추출
