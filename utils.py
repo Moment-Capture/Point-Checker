@@ -1,7 +1,6 @@
 import os
 import sys
 import shutil
-import easyocr
 import datetime
 
 import numpy as np
@@ -9,6 +8,7 @@ import pandas as pd
 
 from pathlib import Path
 from natsort import os_sorted
+from EasyOCR import easyocr
 
 from pdf2image import convert_from_path
 from PIL import Image
