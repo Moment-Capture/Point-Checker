@@ -1,3 +1,9 @@
 [submodule "models/tamil_ocr"]
 	path = models/tamil_ocr
 	url = https://github.com/gnana70/tamil_ocr.git
+[submodule "ultralytics"]
+	path = ultralytics
+	url = https://github.com/ultralytics/ultralytics.git
+[submodule "EasyOCR"]
+	path = EasyOCR
+	url = https://github.com/JaidedAI/EasyOCR.git
