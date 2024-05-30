@@ -65,8 +65,7 @@ def testeeIdJpgDf(df, testee_jpg_df, id_match):
 ### 텍스트 부분 잘라내기 함수 (메인) ###
 def testeeCodeRecognition(jpg_file_path_list, testee_jpg_df):
     # easyOCR 사용
-    # reader = easyocr.Reader(['ko', 'en'])
-    reader = easyocr.Reader(['en'])
+    reader = easyocr.Reader(['ko', 'en'])
     
     # id_match 딕셔너리 초기화
     id_match = pd.DataFrame(columns=["testee_id", "testee_name"])
