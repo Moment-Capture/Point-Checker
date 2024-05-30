@@ -676,8 +676,8 @@ def answer_to_dict(answer_path_var):
 
 # 서버에서 json data를 받아서 채점 결과 df 만드는 함수
 def json_to_df_for_tables(data):
-    data = json.dumps(data)
-    
+    data = json.loads(data)
+
     # 답 딕셔너리 가져오기
     question_answer = answer_to_dict(answer_path_var.get())
 
@@ -685,6 +685,7 @@ def json_to_df_for_tables(data):
     testee_answers = {}
 
     for entry in data:
+        print(entry)
         testee_id = entry.get('testee_id')
         num = str(entry.get('num'))
         testee_answer = entry.get('testee_answer')
