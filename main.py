@@ -491,7 +491,7 @@ def show_grade():
     )
 
     # 2-1. 시험지 파일 업로드 버튼
-    file_path = tk.StringVar()   
+    file_path_var = tk.StringVar()   
     file_path_label=tk.Label(
         bd=0,
         bg="#dddddd",
@@ -685,7 +685,6 @@ def json_to_df_for_tables(data):
     testee_answers = {}
 
     for entry in data:
-        print(entry)
         testee_id = entry.get('testee_id')
         num = str(entry.get('num'))
         testee_answer = entry.get('testee_answer')
