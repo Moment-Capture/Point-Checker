@@ -12,7 +12,6 @@ import datetime
 import public_ip as ip
 import pandas as pd
 from pandastable import Table
-# from io import StringIO
 
 from data import *
 
@@ -56,8 +55,6 @@ TOOL2_PATH = relative_to_btn_img("tool2.png")
 
 
 ### from server import *
-url = "http://13.125.91.116:8080"
-
 def set_global(data):
     global json_data
     json_data = data

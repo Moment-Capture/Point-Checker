@@ -16,7 +16,7 @@ sys.path.append(os.path.dirname(os.getcwd() + "/models/tamil_ocr/ocr_tamil"))
 from ocr_tamil.ocr import OCR
 
 sys.path.append(os.path.dirname(os.getcwd() + "/EasyOCR"))
-from EasyOCR import easyocr
+from EasyOCR.easyocr import easyocr
 
 
 # 인트로 출력

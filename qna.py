@@ -7,7 +7,7 @@ from natsort import os_sorted
 from path import *
 from utils import cropBox, concatImage
 
-sys.path.append(os.path.dirname(os.getcwd() + "/ultralytics"))
+sys.path.append(os.path.dirname(os.getcwd() + "/ultralytics/ultralytics"))
 from ultralytics import YOLO
 
 
