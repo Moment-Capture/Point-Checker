@@ -12,7 +12,7 @@ from sub import detect_subjective
 
 from path import *
 from utils import *
-from code import *
+from recognize import *
 
 
 def getMulDf(testee_path):

@@ -71,13 +71,13 @@ def getId():
     access_time = access_now.strftime("%H-%M-%S")
     # client_id = client_ip + "_" + access_date + "_" + access_time
     client_id = access_date + "_" + access_time
+    
     return client_id
 
 
 ## 서버 연결하는 함수 ##
 def start_connect(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
     json_data = post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
-
     set_global(json_data)
 
     return True
@@ -86,9 +86,7 @@ def start_connect(pdf_path, test_name, copy_num, total_qna_num, testee_num, test
 ## 서버에 post하는 함수 ##
 def post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
     global client_id
-
     client_id = getId()
-
     json_data = getJsonData(client_id, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
 
     return json_data
@@ -678,6 +676,8 @@ def answer_to_dict(answer_path_var):
 
 # 서버에서 json data를 받아서 채점 결과 df 만드는 함수
 def json_to_df_for_tables(data):
+    data = json.dumps(data)
+    
     # 답 딕셔너리 가져오기
     question_answer = answer_to_dict(answer_path_var.get())
 
@@ -724,6 +724,9 @@ def json_to_df_for_tables(data):
 
 def show_result():
     global json_data
+
+    print()
+    print(json_data)
     
     # Initialize Tkinter
     root2 = tk.Toplevel()
