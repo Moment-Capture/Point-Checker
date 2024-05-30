@@ -1,6 +1,5 @@
 import os
 import sys
-import easyocr
 
 import numpy as np
 
@@ -12,6 +11,8 @@ from utils import *
 sys.path.append(os.path.dirname(os.getcwd() + "/models/tamil_ocr/ocr_tamil"))
 from ocr_tamil.ocr import OCR
 
+sys.path.append(os.path.dirname(os.getcwd() + "/EasyOCR"))
+from EasyOCR import easyocr
 
 ### 텍스트 부분 잘라내기 함수 ###
 

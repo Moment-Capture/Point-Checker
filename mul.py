@@ -1,12 +1,15 @@
 import os
+import sys
 import pandas as pd
 
 from pathlib import Path
 from natsort import os_sorted
-from ultralytics import YOLO
 
 from path import *
 from utils import cropBox, labelToInt, deleteDuplicateFiles, getNumEasy, getNumTamil
+
+sys.path.append(os.path.dirname(os.getcwd() + "/ultralytics"))
+from ultralytics import YOLO
 
 
 def detect_multiple(path, reader):

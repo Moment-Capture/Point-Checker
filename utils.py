@@ -8,13 +8,15 @@ import pandas as pd
 
 from pathlib import Path
 from natsort import os_sorted
-from EasyOCR import easyocr
 
 from pdf2image import convert_from_path
 from PIL import Image
 
 sys.path.append(os.path.dirname(os.getcwd() + "/models/tamil_ocr/ocr_tamil"))
 from ocr_tamil.ocr import OCR
+
+sys.path.append(os.path.dirname(os.getcwd() + "/EasyOCR"))
+from EasyOCR import easyocr
 
 
 # 인트로 출력
