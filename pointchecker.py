@@ -12,7 +12,7 @@ from sub import detect_subjective
 
 from path import *
 from utils import *
-from id import *
+from code import *
 
 
 def getMulDf(testee_path):
@@ -145,11 +145,17 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
     # jpg에 적힌 코드 인식해서 testee 구분
     testee_jpg_df = pd.DataFrame(columns=["index_id", "file", "testee_id", "page"])
     id_match = pd.DataFrame(columns=["testee_id", "testee_name"])
+    start = time.time()
     testee_jpg_df, id_match = testeeCodeRecognition(jpg_file_path_list, testee_jpg_df)
-    testee_jpg_df.to_excel(jpg_path + "/testee_jpg_df.xlsx")
+    end = time.time()
+    code_eta = end - start
+
+    print()
+    print("code_eta: " + f"{code_eta:.2f} sec")
 
     testee_id_jpg_df = pd.DataFrame(columns=["index_id", "testee_id", "testee_name", "file", "page"])
     testee_id_jpg_df = testeeIdJpgDf(testee_id_jpg_df, testee_jpg_df, id_match)
+    testee_jpg_df.to_excel(jpg_path + "/testee_jpg_df.xlsx")
     display_testeed_jpg_df = testee_id_jpg_df.set_index(keys=["index_id", "testee_id", "testee_name", "file"], drop=True)
     
     print()
