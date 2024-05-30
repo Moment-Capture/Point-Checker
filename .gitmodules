@@ -1,5 +1,5 @@
-[submodule "models/tamil_ocr"]
-	path = models/tamil_ocr
+[submodule "tamil_ocr"]
+	path = tamil_ocr
 	url = https://github.com/gnana70/tamil_ocr.git
 [submodule "ultralytics"]
 	path = ultralytics

@@ -1,12 +1,19 @@
 # -*- mode: python ; coding: utf-8 -*-
+from PyInstaller.utils.hooks import collect_all
+
+datas = [('D:\\venvs\\pyinstaller_venv\\Lib\\site-packages\\ultralytics\\cfg\\default.yaml', './ultralytics/cfg')]
+binaries = []
+hiddenimports = ['gdown']
+tmp_ret = collect_all('easyocr')
+datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 
 
 a = Analysis(
     ['main.py'],
     pathex=[],
-    binaries=[],
-    datas=[('D:\\venvs\\pyinstaller_venv\\Lib\\site-packages\\ultralytics\\cfg\\default.yaml', './ultralytics/cfg')],
-    hiddenimports=['gdown'],
+    binaries=binaries,
+    datas=datas,
+    hiddenimports=hiddenimports,
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],

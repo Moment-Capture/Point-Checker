@@ -8,7 +8,7 @@ from natsort import os_sorted
 from path import *
 from utils import cropBox, deleteDuplicateFiles, getNumEasy, getNumTamil, getAnswerTamil
 
-sys.path.append(os.path.dirname(os.getcwd() + "/ultralytics/ultralytics"))
+sys.path.append(os.path.dirname(os.getcwd() + "\\" + "ultralytics" + "\\" + "ultralytics"))
 from ultralytics import YOLO
 
 
