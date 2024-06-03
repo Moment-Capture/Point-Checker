@@ -6,13 +6,13 @@ from pathlib import Path
 from natsort import os_sorted
 
 from path import *
-from utils import cropBox, labelToInt, deleteDuplicateFiles, getNumEasy, getNumTamil
+from utils import cropBox, labelToInt, deleteDuplicateFiles, getNumEasy, getNumTamil, getQnaNum
 
 sys.path.append(os.path.dirname(os.getcwd() + "\\" + "ultralytics" + "\\" + "ultralytics"))
 from ultralytics import YOLO
 
 
-def detect_multiple(path, reader):
+def detect_multiple(path, total_qna_num, reader):
     # 경로 정의
     mul_path = path + "/mul"
 
@@ -55,10 +55,10 @@ def detect_multiple(path, reader):
                 
                 # 문항 번호 num 감지
                 if (names[int(cls)] == "num"):
-                    easy_num = getNumEasy(qna_num, img, reader)
-                    # tamil_num = getNumTamil(qna_num, img)
-                    # print("EasyOCR: " + str(easy_num) + ", OCR Tamil: " + str(tamil_num))
-                    qna_num = easy_num
+                    num = getNumTamil(qna_num, img)   
+                    # num = getNumEasy(qna_num, img, reader)
+                    # num = getNumTamil(qna_num, img)              
+                    qna_num = getQnaNum(df, int(total_qna_num), num)
                 
                 # 체크한 선지 번호 check 감지
                 else:

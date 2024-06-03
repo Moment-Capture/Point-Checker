@@ -264,6 +264,16 @@ def makeIdFolder(upload_path):
 #     return id
 
 
+# 최종 qna 반환
+def getQnaNum(df, total_num, num):
+    qna_num = num
+    if num in df["num"].values:
+        qna_num = -1
+    if num > total_num:
+        qna_num = -1
+    return qna_num
+
+
 # ocr_text에서 숫자만 추출
 def getNumText(ocr_text):
     text = ""
@@ -287,9 +297,6 @@ def getNumEasy(num, img, reader):
         num = int(text)
     else:
         num = getNumTamil(num, img)
-    
-    # if num == -1:
-    #     num = getNumTamil(num, img)
     
     return num
 
@@ -340,3 +347,19 @@ def getStringTamil(img):
     text = getString(ocr_text)
     
     print("문항 감지 안 됨: " + text)
+
+
+# 만약 testee_df['num']에 빈 곳이 하나 있으면 없는 번호로 채우기
+def fillDf(testee_df):
+    if (testee_df["num"] == -1).sum() == 1:
+        missing_idx = testee_df[testee_df["num"] == -1].index[0]
+        existing_numbers = testee_df["num"][testee_df["num"] != -1].tolist()
+        existing_numbers = list(map(int, existing_numbers))
+
+        new_number = 1
+        while new_number in existing_numbers:
+            new_number += 1
+            
+        testee_df.at[missing_idx, "num"] = new_number
+    
+    return testee_df

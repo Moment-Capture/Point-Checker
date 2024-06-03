@@ -15,7 +15,7 @@ from utils import *
 from recognize import *
 
 
-def getMulDf(testee_path):
+def getMulDf(testee_path, total_qna_num):
     # 경로 정의
     path = testee_path
 
@@ -40,7 +40,7 @@ def getMulDf(testee_path):
     return mul_df
 
 
-def getSubDf(testee_path):
+def getSubDf(testee_path, total_qna_num):
     # 경로 정의
     path = testee_path
 
@@ -65,7 +65,7 @@ def getSubDf(testee_path):
     return sub_df
 
 
-def getMulSubDf(testee_path):
+def getMulSubDf(testee_path, total_qna_num):
     # 경로 정의
     path = testee_path
 
@@ -79,12 +79,12 @@ def getMulSubDf(testee_path):
     qna_eta = end - start
 
     start = time.time()
-    mul_df = detect_multiple(path, reader)
+    mul_df = detect_multiple(path, total_qna_num, reader)
     end = time.time()
     mul_eta = end - start
 
     start = time.time()
-    sub_df = detect_subjective(path, reader)
+    sub_df = detect_subjective(path, total_qna_num, reader)
     end = time.time()
     sub_eta = end - start
 
@@ -156,12 +156,12 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
     testee_id_jpg_df = pd.DataFrame(columns=["index_id", "testee_id", "testee_name", "file", "page"])
     testee_id_jpg_df = testeeIdJpgDf(testee_id_jpg_df, testee_jpg_df, id_match)
     testee_jpg_df.to_excel(jpg_path + "/testee_jpg_df.xlsx")
-    display_testeed_jpg_df = testee_id_jpg_df.set_index(keys=["index_id", "testee_id", "testee_name", "file"], drop=True)
+    display_testee_jpg_df = testee_id_jpg_df.set_index(keys=["index_id", "testee_id", "testee_name", "file"], drop=True)
     
+    print()
+    print(id_match)
     # print()
-    # print(id_match)
-    # print()
-    # print_full(display_testeed_jpg_df)
+    # print_full(display_testee_jpg_df)
     
     # 응시자 수만큼 해당 과정 반복
     for id_idx, id_row in id_match.iterrows():
@@ -191,24 +191,15 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
         testee_df = pd.DataFrame()
 
         if is_mul and is_sub:
-            testee_df = getMulSubDf(testee_path)
+            testee_df = getMulSubDf(testee_path, total_qna_num)
         else:
             if is_mul:
-                testee_df = getMulDf(testee_path)
+                testee_df = getMulDf(testee_path, total_qna_num)
             if is_sub:
-                testee_df = getSubDf(testee_path)
+                testee_df = getSubDf(testee_path, total_qna_num)
 
         # 만약 testee_df['num']에 빈 곳이 하나 있으면 없는 번호로 채우기
-        if (testee_df["num"] == "").sum() == 1:
-            missing_idx = testee_df[testee_df['num'] == ""].index[0]
-            existing_numbers = testee_df['num'][testee_df['num'] != ""].tolist()
-            existing_numbers = list(map(int, existing_numbers))
-
-            new_number = 1
-            while new_number in existing_numbers:
-                new_number += 1
-            
-            testee_df.at[missing_idx, 'num'] = str(new_number)
+        testee_df = fillDf(testee_df)
 
         # 전체 df와 합치기
         testee_df.sort_values(by=["num"], inplace=True)

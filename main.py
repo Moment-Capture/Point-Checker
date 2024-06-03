@@ -691,6 +691,10 @@ def json_to_df_for_tables(data):
         testee_id = entry.get('testee_id')
         num = str(entry.get('num'))
         testee_answer = entry.get('testee_answer')
+
+        if num == "-1":
+            continue
+
         # 다중 정답일 경우 대괄호를 제외하고 문자열로 저장
         if isinstance(testee_answer, list):
             testee_answer = ','.join(map(str, testee_answer))
@@ -704,14 +708,23 @@ def json_to_df_for_tables(data):
             testee_answers[testee_id+" O/X"] = {}
         
         testee_answers[testee_id][num] = testee_answer
+        
         # 문항번호가 누락되지 않은 문항에 대해서만 답 비교
-        if num != '-1':
-            if testee_answer == question_answer['answer'][num].replace(" ", ""):
-                count_o += 1
-                testee_answers[testee_id+" O/X"][num] = 'O'
-            else:
-                count_x += 1
-                testee_answers[testee_id+" O/X"][num] = 'X'
+
+        # if num != "-1":
+        #     if testee_answer == question_answer['answer'][num].replace(" ", ""):
+        #         count_o += 1
+        #         testee_answers[testee_id+" O/X"][num] = 'O'
+        #     else:
+        #         count_x += 1
+        #         testee_answers[testee_id+" O/X"][num] = 'X'
+
+        if testee_answer == question_answer['answer'][num].replace(" ", ""):
+            count_o += 1
+            testee_answers[testee_id+" O/X"][num] = 'O'
+        else:
+            count_x += 1
+            testee_answers[testee_id+" O/X"][num] = 'X'
 
         testee_answers[testee_id+" O/X"]['정답'] = str(count_o)
 
