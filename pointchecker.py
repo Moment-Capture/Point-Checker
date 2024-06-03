@@ -24,9 +24,6 @@ def allowed_file(filename):
 
 
 def getJsonData(client_id, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
-    # upload 폴더 생성
-    makeFolder(UPLOAD_FOLDER)
-
     id_path = UPLOAD_FOLDER + "\\" + client_id
 
     print()
@@ -36,8 +33,6 @@ def getJsonData(client_id, pdf_path, test_name, copy_num, total_qna_num, testee_
     print()
 
     json_data = plural_check(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
-
-    deleteFolder(UPLOAD_FOLDER)
     
     return json_data
 
@@ -154,6 +149,9 @@ def getMulSubDf(testee_path, total_qna_num):
 
 
 def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
+    # upload 폴더 생성
+    makeFolder(UPLOAD_FOLDER)
+
     # 경로 정의
     path = str(Path(id_path))
     jpg_path = path + "\\" + "jpg"
@@ -263,7 +261,10 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
 
     df.to_excel(path+"/final_df.xlsx")
 
-    # temp 폴더 삭제
-    deleteFolder(temp_path)
+    # # temp 폴더 삭제
+    # deleteFolder(temp_path)
+
+    # # upload 폴더 삭제
+    # deleteFolder(UPLOAD_FOLDER)
 
     return df

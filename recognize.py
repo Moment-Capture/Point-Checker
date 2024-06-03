@@ -27,16 +27,13 @@ def readTesteeName(img, reader):
     x1, y1, x2, y2 = (610, 30, 750, 90)
     cropped_img = img.crop((x1, y1, x2, y2))
     image_np = np.array(cropped_img)
-    image = preprocess_image(image_np)
     
     # tamilocr 사용
     text = ""
-    ocr_text = OCR().predict(image)
-    text = getNumText(ocr_text)
+    text = getTextTamil(image_np)
     
     if not text:
-        ocr_text = reader.readtext(image, detail=0)
-        text = getNumText(ocr_text)
+        text = getTextEasy(image_np, reader)
     
     return text
 

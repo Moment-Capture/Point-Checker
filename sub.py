@@ -6,7 +6,7 @@ from pathlib import Path
 from natsort import os_sorted
 
 from path import *
-from utils import cropBox, deleteDuplicateFiles, getNumEasy, getNumTamil, getQnaNum, getAnswerTamil
+from utils import cropBox, deleteDuplicateFiles, getQnaNum, getAnswer
 
 sys.path.append(os.path.dirname(os.getcwd() + "\\" + "ultralytics" + "\\" + "ultralytics"))
 from ultralytics import YOLO
@@ -66,8 +66,8 @@ def detect_subjective(path, num_list, total_qna_num, reader):
                         continue
                     files.append(file)
                     
-                    # ocr tamil 사용
-                    answer = getAnswerTamil(answer, img)
+                    # ocr 사용
+                    answer = getAnswer(img, reader)
             
             new_row = {"file" : file_name, "num" : qna_num, "testee_answer" : answer, "correct_answer" : 0}
             df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)

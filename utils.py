@@ -263,6 +263,21 @@ def preprocess_image(img):
     return img
 
 
+# 답안 이미지 전처리
+def preprocess_image_answer(img):
+    # 대비 조정
+    img = cv2.convertScaleAbs(img, alpha=0.9, beta=0)
+    
+    # upscale & blur
+    scale_factor = 2
+    upscaled = cv2.resize(img, None, fx=scale_factor, fy=scale_factor, interpolation=cv2.INTER_LINEAR)
+    blur = cv2.blur(upscaled, (5, 5))
+
+    img = blur
+    
+    return img
+
+
 # ocr_text에서 숫자만 추출
 def getNumText(ocr_text):
     text = ""
@@ -270,10 +285,14 @@ def getNumText(ocr_text):
         for t in txt:
             if (t.isdigit()):
                 text += t
-            elif (t == 'l' or t == 'i' or t == 'I' or t == '|' or t == '/'):
+            elif (t == 'l' or t == 'i' or t == 'I' or t == '|' or t == '/' or t == ')'):
                 text += '1'
             elif (t == '그'):
                 text += '2'
+            elif (t == 'b'):
+                text += '6'
+            elif (t == 'b'):
+                text += '6'
             elif (t == 'q'):
                 text += '9'
             elif (t == 'o'):
@@ -284,13 +303,12 @@ def getNumText(ocr_text):
 # 문항 번호 반환 - EasyOCR
 def getNumEasy(img, reader):
     num = -1
+    img = preprocess_image(img)
     ocr_text = reader.readtext(img, detail=0)
     text = getNumText(ocr_text)
     
     if text:
         num = int(text)
-    else:
-        num = getNumTamil(img)
     
     return num
 
@@ -298,6 +316,7 @@ def getNumEasy(img, reader):
 # 문항 번호 반환 - OCR Tamil
 def getNumTamil(img):
     num = -1
+    img = preprocess_image(img)
     ocr_text = OCR().predict(img)
     text = getNumText(ocr_text)
     
@@ -307,24 +326,60 @@ def getNumTamil(img):
     return num
 
 
-# 단답 답안 반환 - OCR Tamil
-def getAnswerTamil(answer, img):
+# 문항 번호 반환 - EasyOCR
+def getTextEasy(img, reader):
+    text = ""
+    img = preprocess_image(img)
+    ocr_text = reader.readtext(img, detail=0)
+    text = getNumText(ocr_text)
+    
+    return text
+
+
+# 문항 번호 반환 - OCR Tamil
+def getTextTamil(img):
+    text = ""
+    img = preprocess_image(img)
     ocr_text = OCR().predict(img)
     text = getNumText(ocr_text)
     
-    if text:
-        answer = text
+    return text
+
+
+# 문항 번호 반환 - EasyOCR
+def getAnswerEasy(img, reader):
+    text = ""
+    img = preprocess_image_answer(img)
+    ocr_text = reader.readtext(img, detail=0)
+    print()
+    print("easyocr")
+    print(ocr_text)
+    text = getNumText(ocr_text)
     
-    # else:
-    #     reader = easyocr.Reader(['ko', 'en'])
-    #     ocr_text = reader.readtext(img, detail=0)
-    #     text = getString(ocr_text)
-    #     print("문항 감지 안 됨(text): " + text)
-    #     print("문항 감지 안 됨(ocr_text):")
-    #     for ocr in ocr_text:
-    #         print(ocr)
+    return text
+
+
+# 문항 번호 반환 - OCR Tamil
+def getAnswerTamil(img):
+    text = ""
+    img = preprocess_image_answer(img)
+    ocr_text = OCR().predict(img)
+    print()
+    print("tamilocr")
+    print(ocr_text)
+    text = getNumText(ocr_text)
     
-    return answer
+    return text
+
+
+# 단답 답안 반환
+def getAnswer(img, reader):
+    text = getAnswerTamil(img)
+
+    if not text:
+        text = getAnswerEasy(img, reader)
+
+    return text 
 
 
 def checkNum(num, total_num, num_list):
@@ -340,13 +395,11 @@ def checkNum(num, total_num, num_list):
 def getQnaNum(num_list, img, total_qna_num, reader):
     total_num = int(total_qna_num)
     qna_num = -1
-    # num = getNumTamil(img)
-    # num = getNumEasy(img, reader)
-    num = getNumEasy(img, reader)
+    num = getNumTamil(img)
     num = checkNum(num, total_num, num_list)
     
     if num == -1:
-        num = getNumTamil(img)
+        num = getNumEasy(img, reader)
         num = checkNum(num, total_num, num_list)
     
     qna_num = num
