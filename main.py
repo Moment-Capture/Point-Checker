@@ -560,7 +560,7 @@ def show_grade():
     # 응시자수, 한부당 매수 확인 후 서버 전달
     def check_entries_and_start_grading():
         # 텍스트 필드가 모두 채워졌는지 확인
-        if testee_num.get() and copy_num.get() and file_path_var.get() and answer_path_var.get() and test_name.get():
+        if testee_num.get() and copy_num.get() and total_qna_num.get() and file_path_var.get() and answer_path_var.get() and test_name.get():
             global file_name
             file_name = str(test_name.get())
             progress_bar.start(20)
