@@ -28,8 +28,10 @@ def getMulDf(testee_path, total_qna_num):
     end = time.time()
     qna_eta = end - start
 
+    num_list = []
+
     start = time.time()
-    mul_df = detect_multiple(path, reader)
+    mul_df = detect_multiple(path, num_list, total_qna_num, reader)
     end = time.time()
     mul_eta = end - start
 
@@ -53,8 +55,10 @@ def getSubDf(testee_path, total_qna_num):
     end = time.time()
     qna_eta = end - start
 
+    num_list = []
+
     start = time.time()
-    sub_df = detect_multiple(path, reader)
+    sub_df = detect_subjective(path, num_list, total_qna_num, reader)
     end = time.time()
     sub_eta = end - start
 
@@ -78,13 +82,15 @@ def getMulSubDf(testee_path, total_qna_num):
     end = time.time()
     qna_eta = end - start
 
+    num_list = []
+
     start = time.time()
-    mul_df = detect_multiple(path, total_qna_num, reader)
+    mul_df = detect_multiple(path, num_list, total_qna_num, reader)
     end = time.time()
     mul_eta = end - start
 
     start = time.time()
-    sub_df = detect_subjective(path, total_qna_num, reader)
+    sub_df = detect_subjective(path, num_list, total_qna_num, reader)
     end = time.time()
     sub_eta = end - start
 
@@ -199,7 +205,7 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
                 testee_df = getSubDf(testee_path, total_qna_num)
 
         # 만약 testee_df['num']에 빈 곳이 하나 있으면 없는 번호로 채우기
-        testee_df = fillDf(testee_df)
+        testee_df = fillOneDf(testee_df)
 
         # 전체 df와 합치기
         testee_df.sort_values(by=["num"], inplace=True)

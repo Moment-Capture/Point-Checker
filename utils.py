@@ -264,16 +264,6 @@ def makeIdFolder(upload_path):
 #     return id
 
 
-# 최종 qna 반환
-def getQnaNum(df, total_num, num):
-    qna_num = num
-    if num in df["num"].values:
-        qna_num = -1
-    if num > total_num:
-        qna_num = -1
-    return qna_num
-
-
 # ocr_text에서 숫자만 추출
 def getNumText(ocr_text):
     text = ""
@@ -289,20 +279,22 @@ def getNumText(ocr_text):
 
 
 # 문항 번호 반환 - EasyOCR
-def getNumEasy(num, img, reader):
+def getNumEasy(img, reader):
+    num = -1
     ocr_text = reader.readtext(img, detail=0)
     text = getNumText(ocr_text)
     
     if text:
         num = int(text)
     else:
-        num = getNumTamil(num, img)
+        num = getNumTamil(img)
     
     return num
 
 
 # 문항 번호 반환 - OCR Tamil
-def getNumTamil(num, img):
+def getNumTamil(img):
+    num = -1
     ocr_text = OCR().predict(img)
     text = getNumText(ocr_text)
     
@@ -332,6 +324,25 @@ def getAnswerTamil(answer, img):
     return answer
 
 
+# qna_num 반환
+def getQnaNum(num_list, img, total_num, reader):
+    qna_num = -1
+    num = getNumTamil(img)
+    # num = getNumEasy(img, reader)
+    
+    if num in num_list:
+        num = -1
+    if num > total_num:
+        num = -1
+    
+    qna_num = num
+
+    if qna_num != -1:
+        num_list.append(qna_num)
+    
+    return qna_num
+
+
 # ocr_text에서 문자 전체 추출
 def getString(ocr_text):
     text = ""
@@ -350,7 +361,7 @@ def getStringTamil(img):
 
 
 # 만약 testee_df['num']에 빈 곳이 하나 있으면 없는 번호로 채우기
-def fillDf(testee_df):
+def fillOneDf(testee_df):
     if (testee_df["num"] == -1).sum() == 1:
         missing_idx = testee_df[testee_df["num"] == -1].index[0]
         existing_numbers = testee_df["num"][testee_df["num"] != -1].tolist()

@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.getcwd() + "\\" + "ultralytics" + "\\" + "ult
 from ultralytics import YOLO
 
 
-def detect_subjective(path, total_qna_num, reader):
+def detect_subjective(path, num_list, total_qna_num, reader):
     # 경로 정의
     sub_path = path + "/sub"
 
@@ -56,11 +56,8 @@ def detect_subjective(path, total_qna_num, reader):
                 img = cropBox(box, image)
 
                 # 문항 번호 num 감지
-                if names[int(cls)] == "num":
-                    num = getNumTamil(qna_num, img)   
-                    # num = getNumEasy(qna_num, img, reader)
-                    # num = getNumTamil(qna_num, img)              
-                    qna_num = getQnaNum(df, int(total_qna_num), num)
+                if names[int(cls)] == "num":              
+                    qna_num = getQnaNum(num_list, img, int(total_qna_num), reader)
                 
                 # 적힌 단답 answer 감지
                 else:

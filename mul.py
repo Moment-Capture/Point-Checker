@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.getcwd() + "\\" + "ultralytics" + "\\" + "ult
 from ultralytics import YOLO
 
 
-def detect_multiple(path, total_qna_num, reader):
+def detect_multiple(path, num_list, total_qna_num, reader):
     # 경로 정의
     mul_path = path + "/mul"
 
@@ -51,14 +51,10 @@ def detect_multiple(path, total_qna_num, reader):
             # 문항 번호 감지 & checked 영역 감지
             for box, cls in zip(boxes, clss):
                 img = cropBox(box, image)
-                text = ""
                 
                 # 문항 번호 num 감지
-                if (names[int(cls)] == "num"):
-                    num = getNumTamil(qna_num, img)   
-                    # num = getNumEasy(qna_num, img, reader)
-                    # num = getNumTamil(qna_num, img)              
-                    qna_num = getQnaNum(df, int(total_qna_num), num)
+                if (names[int(cls)] == "num"):              
+                    qna_num = getQnaNum(num_list, img, int(total_qna_num), reader)
                 
                 # 체크한 선지 번호 check 감지
                 else:
