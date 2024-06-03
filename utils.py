@@ -291,12 +291,10 @@ def getNumText(ocr_text):
                 text += '2'
             elif (t == 'b'):
                 text += '6'
-            elif (t == 'b'):
-                text += '6'
-            elif (t == 'q'):
-                text += '9'
             elif (t == 'o'):
                 text += '8'
+            elif (t == 'q'):
+                text += '9'
     return text
 
 
@@ -351,9 +349,6 @@ def getAnswerEasy(img, reader):
     text = ""
     img = preprocess_image_answer(img)
     ocr_text = reader.readtext(img, detail=0)
-    print()
-    print("easyocr")
-    print(ocr_text)
     text = getNumText(ocr_text)
     
     return text
@@ -364,9 +359,6 @@ def getAnswerTamil(img):
     text = ""
     img = preprocess_image_answer(img)
     ocr_text = OCR().predict(img)
-    print()
-    print("tamilocr")
-    print(ocr_text)
     text = getNumText(ocr_text)
     
     return text
