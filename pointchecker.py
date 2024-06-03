@@ -261,10 +261,10 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
 
     df.to_excel(path+"/final_df.xlsx")
 
-    # # temp 폴더 삭제
-    # deleteFolder(temp_path)
+    # temp 폴더 삭제
+    deleteFolder(temp_path)
 
-    # # upload 폴더 삭제
-    # deleteFolder(UPLOAD_FOLDER)
+    # upload 폴더 삭제
+    deleteFolder(UPLOAD_FOLDER)
 
     return df
