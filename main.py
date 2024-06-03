@@ -99,6 +99,7 @@ widgets = []
 entry_columns = []
 file_path_var = None
 answer_path_var = None
+file_name = ""
 
 
 ## 공통  ##
@@ -559,7 +560,9 @@ def show_grade():
     # 응시자수, 한부당 매수 확인 후 서버 전달
     def check_entries_and_start_grading():
         # 텍스트 필드가 모두 채워졌는지 확인
-        if testee_num.get() and copy_num.get() and file_path_var.get() and answer_path_var.get():
+        if testee_num.get() and copy_num.get() and file_path_var.get() and answer_path_var.get() and test_name.get():
+            global file_name
+            file_name = str(test_name.get())
             progress_bar.start(20)
             
             # 시험 정보가 모두 입력된 경우 채점 함수 호출
@@ -654,7 +657,10 @@ class PandasViewer(tk.Frame):
         export_button.pack(side = tk.RIGHT, padx=10, pady=10)
 
     def export_to_excel(self):
-        file_path = filedialog.asksaveasfilename(defaultextension=".xlsx")
+        global file_name
+        ftypes = [('excel file', '.xlsx'), ('csv file', '.csv'), ('All files', '*')]
+        init_file = file_name + ".xlsx"
+        file_path = filedialog.asksaveasfilename(filetypes=ftypes, initialfile=init_file, defaultextension=".xlsx")
         if file_path:
             self.dataframe.to_excel(file_path, index=True)
 
@@ -721,9 +727,6 @@ def json_to_df_for_tables(data):
 
 def show_result():
     global json_data
-
-    print()
-    print(json_data)
     
     # Initialize Tkinter
     root2 = tk.Toplevel()
