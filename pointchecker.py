@@ -158,10 +158,10 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
     testee_jpg_df.to_excel(jpg_path + "/testee_jpg_df.xlsx")
     display_testeed_jpg_df = testee_id_jpg_df.set_index(keys=["index_id", "testee_id", "testee_name", "file"], drop=True)
     
-    print()
-    print(id_match)
-    print()
-    print_full(display_testeed_jpg_df)
+    # print()
+    # print(id_match)
+    # print()
+    # print_full(display_testeed_jpg_df)
     
     # 응시자 수만큼 해당 과정 반복
     for id_idx, id_row in id_match.iterrows():
