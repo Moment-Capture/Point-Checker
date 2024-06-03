@@ -182,6 +182,7 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
         makeTesteeFolder(testee_path)
 
         print()
+        print("##############")
         print("testee_id: " + testee_id)
         print()
 

@@ -57,7 +57,7 @@ def detect_subjective(path, num_list, total_qna_num, reader):
 
                 # 문항 번호 num 감지
                 if names[int(cls)] == "num":              
-                    qna_num = getQnaNum(num_list, img, int(total_qna_num), reader)
+                    qna_num = getQnaNum(num_list, img, total_qna_num, reader)
                 
                 # 적힌 단답 answer 감지
                 else:

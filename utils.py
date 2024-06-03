@@ -324,16 +324,27 @@ def getAnswerTamil(answer, img):
     return answer
 
 
-# qna_num 반환
-def getQnaNum(num_list, img, total_num, reader):
-    qna_num = -1
-    num = getNumTamil(img)
-    # num = getNumEasy(img, reader)
-    
+def checkNum(num, total_num, num_list):
     if num in num_list:
         num = -1
     if num > total_num:
         num = -1
+    
+    return num
+
+
+# qna_num 반환
+def getQnaNum(num_list, img, total_qna_num, reader):
+    total_num = int(total_qna_num)
+    qna_num = -1
+    # num = getNumTamil(img)
+    # num = getNumEasy(img, reader)
+    num = getNumEasy(img, reader)
+    num = checkNum(num, total_num, num_list)
+    
+    if num == -1:
+        num = getNumTamil(img)
+        num = checkNum(num, total_num, num_list)
     
     qna_num = num
 
