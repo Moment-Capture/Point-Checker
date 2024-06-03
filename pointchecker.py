@@ -172,11 +172,6 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
         this_id = "testee_" + str(index_id)
         testee_id = id_row["testee_id"]
         testee_name = id_row["testee_name"]
-
-        # if str(i) in id_match:
-        #     testee_id = id_match[str(i)]
-        #     testee_name = id_match[str(i)][testee_id]
-
         testee_path = temp_path + "/" + this_id
         makeTesteeFolder(testee_path)
 
@@ -203,6 +198,18 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
             if is_sub:
                 testee_df = getSubDf(testee_path)
 
+        # 만약 testee_df['num']에 빈 곳이 하나 있으면 없는 번호로 채우기
+        if (testee_df["num"] == "").sum() == 1:
+            missing_idx = testee_df[testee_df['num'] == ""].index[0]
+            existing_numbers = testee_df['num'][testee_df['num'] != ""].tolist()
+            existing_numbers = list(map(int, existing_numbers))
+
+            new_number = 1
+            while new_number in existing_numbers:
+                new_number += 1
+            
+            testee_df.at[missing_idx, 'num'] = str(new_number)
+
         # 전체 df와 합치기
         testee_df.sort_values(by=["num"], inplace=True)
         if testee_name:
@@ -213,7 +220,7 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
         end = time.time()
         testee_eta = end - start
         print("testee_eta: " + f"{testee_eta:.2f} sec")
-
+    
 
     # # 응시자 수만큼 해당 과정 반복
     # for i in range(1, testee_num+1):
