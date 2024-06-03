@@ -33,14 +33,6 @@ def readTesteeName(img, reader):
     text = ""
     ocr_text = OCR().predict(image)
     text = getNumText(ocr_text)
-
-    print()
-    print("tamil ocr_text")
-    print(ocr_text)
-
-    ocr_text = reader.readtext(image, detail=0)
-    print("easyocr_text")
-    print(ocr_text)
     
     if not text:
         ocr_text = reader.readtext(image, detail=0)
