@@ -77,6 +77,10 @@ def start_connect(pdf_path, test_name, copy_num, total_qna_num, testee_num, test
 def post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
     global client_id
     client_id = getId()
+
+    global total_num
+    total_num = int(total_qna_num)
+
     json_data = getJsonData(client_id, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
 
     return json_data
@@ -93,6 +97,7 @@ entry_columns = []
 file_path_var = None
 answer_path_var = None
 file_name = ""
+total_num = 0
 
 
 ## 공통  ##
@@ -175,6 +180,7 @@ def insert_page_number(num_students, file_path):
         # Close the PDF
         pdf_document.close()
     show_popup()
+
 
 #종료 팝업 띄우기
 def show_popup():
@@ -552,6 +558,7 @@ def show_grade():
         if testee_num.get() and copy_num.get() and total_qna_num.get() and file_path_var.get() and answer_path_var.get() and test_name.get():
             global file_name
             file_name = str(test_name.get())
+
             progress_bar.start(20)
             
             # 시험 정보가 모두 입력된 경우 채점 함수 호출
@@ -681,7 +688,12 @@ def json_to_df_for_tables(data):
         num = str(entry.get('num'))
         testee_answer = entry.get('testee_answer')
 
-        if num == "-1":
+        if num == "-1" or num == "0":
+            continue
+        
+        global total_num
+
+        if int(num) > total_num:
             continue
 
         # 다중 정답일 경우 대괄호를 제외하고 문자열로 저장
@@ -707,6 +719,9 @@ def json_to_df_for_tables(data):
         #     else:
         #         count_x += 1
         #         testee_answers[testee_id+" O/X"][num] = 'X'
+
+        if not (num in question_answer["answer"]):
+            continue
 
         if testee_answer == question_answer['answer'][num].replace(" ", ""):
             count_o += 1

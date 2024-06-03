@@ -201,7 +201,7 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
 
     testee_id_jpg_df = pd.DataFrame(columns=["index_id", "testee_id", "testee_name", "file", "page"])
     testee_id_jpg_df = testeeIdJpgDf(testee_id_jpg_df, testee_jpg_df, id_match)
-    testee_jpg_df.to_excel(jpg_path + "/testee_jpg_df.xlsx")
+    testee_jpg_df.to_excel(jpg_path + "\\" + "testee_jpg_df.xlsx")
     display_testee_jpg_df = testee_id_jpg_df.set_index(keys=["index_id", "testee_id", "testee_name", "file"], drop=True)
     
     print()
@@ -218,7 +218,7 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
         this_id = "testee_" + str(index_id)
         testee_id = id_row["testee_id"]
         testee_name = id_row["testee_name"]
-        testee_path = temp_path + "/" + this_id
+        testee_path = temp_path + "\\" + this_id
         makeTesteeFolder(testee_path)
 
         print()
@@ -231,7 +231,7 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
             if row["index_id"] == index_id:
                 testee_jpg_path = row["file"]
                 testee_jpg_name = os.path.basename(testee_jpg_path)
-                testee_jpg_copy_path = testee_path + "/" + testee_jpg_name
+                testee_jpg_copy_path = testee_path + "\\" + testee_jpg_name
                 shutil.move(testee_jpg_path, testee_jpg_copy_path)
 
         # 응시자별 df 생성
@@ -259,7 +259,7 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
         testee_eta = end - start
         print("testee_eta: " + f"{testee_eta:.2f} sec")
 
-    df.to_excel(path+"/final_df.xlsx")
+    df.to_excel(path + "\\" +"final_df.xlsx")
 
     # temp 폴더 삭제
     deleteFolder(temp_path)

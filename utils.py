@@ -330,6 +330,10 @@ def getTextEasy(img, reader):
     img = preprocess_image(img)
     ocr_text = reader.readtext(img, detail=0)
     text = getNumText(ocr_text)
+
+    # print()
+    # print("easy")
+    # print(ocr_text)
     
     return text
 
@@ -340,6 +344,10 @@ def getTextTamil(img):
     img = preprocess_image(img)
     ocr_text = OCR().predict(img)
     text = getNumText(ocr_text)
+
+    # print()
+    # print("tamil")
+    # print(ocr_text)
     
     return text
 
