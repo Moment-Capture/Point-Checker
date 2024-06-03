@@ -13,7 +13,7 @@ import public_ip as ip
 import pandas as pd
 from pandastable import Table
 
-from data import *
+from pointchecker import getJsonData
 
 ##########################################################
 ##########################################################

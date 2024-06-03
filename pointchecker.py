@@ -15,6 +15,54 @@ from utils import *
 from recognize import *
 
 
+ALLOWED_FILE_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_FILE_EXTENSIONS
+
+
+def getJsonData(client_id, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
+    # upload 폴더 생성
+    makeFolder(UPLOAD_FOLDER)
+
+    id_path = UPLOAD_FOLDER + "\\" + client_id
+
+    print()
+    print(client_id)
+    print(id_path)
+    print("파일 업로드 성공")
+    print()
+
+    json_data = plural_check(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
+
+    deleteFolder(UPLOAD_FOLDER)
+    
+    return json_data
+
+
+def plural_check(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
+    start = time.time()
+    df = pd.DataFrame()
+    df = pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
+    end = time.time()
+    point_eta = end - start
+
+    print()
+    print_full(df.set_index(keys=["testee_id", "file"], drop=True))
+    print()
+    print("point_eta: " + f"{point_eta:.2f} sec")
+    print()
+    
+    if len(df) == 0:
+        return "Error Occured", 200
+    
+    json_data = df.to_json(orient="records")
+
+    return json_data
+
+
 def getMulDf(testee_path, total_qna_num):
     # 경로 정의
     path = testee_path
@@ -108,8 +156,8 @@ def getMulSubDf(testee_path, total_qna_num):
 def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
     # 경로 정의
     path = str(Path(id_path))
-    jpg_path = path + "/jpg"
-    temp_path = path + "/temp"
+    jpg_path = path + "\\" + "jpg"
+    temp_path = path + "\\" + "temp"
 
     # is_mul, is_sub 정의
     is_mul = int(test_category[0])
@@ -124,7 +172,6 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
 
     # pdf 파일 탐지
     original_pdf_file_path_list = []
-    # original_pdf_file_path_list = os_sorted(Path(path).glob('*.pdf'))
     original_pdf_file_path_list.append(pdf_path)
     
     # pdf 파일 있는지 검사
@@ -142,11 +189,6 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
     if len(jpg_file_path_list) == 0:
         print("jpg file path list is empty")
         return df
-    
-    # 사용자가 입력한 정보에 맞게 분리됐는지 확인
-    # if len(jpg_file_path_list) != copy_num * testee_num:
-    #     print("some jpg files are missing or entered incorrect information")
-    #     return None
 
     # jpg에 적힌 코드 인식해서 testee 구분
     testee_jpg_df = pd.DataFrame(columns=["index_id", "file", "testee_id", "page"])
@@ -218,62 +260,6 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
         end = time.time()
         testee_eta = end - start
         print("testee_eta: " + f"{testee_eta:.2f} sec")
-    
-
-    # # 응시자 수만큼 해당 과정 반복
-    # for i in range(1, testee_num+1):
-    #     # 응시자별 폴더 생성
-    #     start = time.time()
-
-    #     if not i in id_match.index:
-    #         continue
-        
-    #     index_id = i
-    #     this_id = "testee_" + str(index_id)
-    #     testee_id = id_match.loc[index_id, "testee_id"]
-    #     testee_name = id_match.loc[index_id, "testee_name"]
-
-    #     # if str(i) in id_match:
-    #     #     testee_id = id_match[str(i)]
-    #     #     testee_name = id_match[str(i)][testee_id]
-
-    #     testee_path = temp_path + "/" + this_id
-    #     makeTesteeFolder(testee_path)
-
-    #     print()
-    #     print("testee_id: " + testee_id)
-    #     print()
-
-    #     # 응시자별 폴더로 jpg 나누기
-    #     for idx, row in testee_jpg_df.iterrows():
-    #         if row["index_id"] == index_id:
-    #             testee_jpg_path = row["file"]
-    #             testee_jpg_name = os.path.basename(testee_jpg_path)
-    #             testee_jpg_copy_path = testee_path + "/" + testee_jpg_name
-    #             shutil.move(testee_jpg_path, testee_jpg_copy_path)
-
-    #     # 응시자별 df 생성
-    #     testee_df = pd.DataFrame()
-
-    #     if is_mul and is_sub:
-    #         testee_df = getMulSubDf(testee_path)
-    #     else:
-    #         if is_mul:
-    #             testee_df = getMulDf(testee_path)
-    #         if is_sub:
-    #             testee_df = getSubDf(testee_path)
-
-    #     # 전체 df와 합치기
-    #     testee_df.sort_values(by=["num"], inplace=True)
-    #     if testee_name:
-    #         df = concatTesteeDf(df, testee_name, testee_df)
-    #     else:
-    #         df = concatTesteeDf(df, this_id, testee_df)
-
-    #     end = time.time()
-    #     testee_eta = end - start
-    #     print("testee_eta: " + f"{testee_eta:.2f} sec")
-
 
     df.to_excel(path+"/final_df.xlsx")
 

@@ -1,5 +1,6 @@
 import os
 import sys
+import cv2
 import shutil
 import datetime
 
@@ -223,8 +224,8 @@ def deleteFolder(path):
 
 # 응시자 폴더 생성
 def makeTesteeFolder(testee_path):
-    mul_path = testee_path + "/mul"
-    sub_path = testee_path + "/sub"
+    mul_path = testee_path + "\\" + "mul"
+    sub_path = testee_path + "\\" + "sub"
         
     ## temp 하위 폴더 생성 ##
     # 해당 tester의 폴더 생성
@@ -240,8 +241,8 @@ def makeTesteeFolder(testee_path):
 # id 폴더 생성
 def makeIdFolder(upload_path):
     id_path = str(Path(upload_path))
-    jpg_path = id_path + "/jpg"
-    temp_path = id_path + "/temp"
+    jpg_path = id_path + "\\" + "jpg"
+    temp_path = id_path + "\\" + "temp"
 
     ## 결과 저장 폴더 생성 ##
     # 해당 id의 폴더 생성
@@ -254,14 +255,12 @@ def makeIdFolder(upload_path):
     makeFolder(temp_path)
 
 
-# # id 생성
-# def getId():
-#     client_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-#     access_now = datetime.datetime.now()
-#     access_date = access_now.strftime("%Y-%m-%d")
-#     access_time = access_now.strftime("%H-%M-%S")
-#     id = client_ip + "_" + access_date + "_" + access_time
-#     return id
+# 이미지 전처리
+def preprocess_image(img):
+    # 대비 조정
+    img = cv2.convertScaleAbs(img, alpha=0.9, beta=0)
+    
+    return img
 
 
 # ocr_text에서 숫자만 추출
@@ -273,8 +272,12 @@ def getNumText(ocr_text):
                 text += t
             elif (t == 'l' or t == 'i' or t == 'I' or t == '|' or t == '/'):
                 text += '1'
+            elif (t == '그'):
+                text += '2'
             elif (t == 'q'):
                 text += '9'
+            elif (t == 'o'):
+                text += '8'
     return text
 
 

@@ -5,7 +5,6 @@ import numpy as np
 
 from PIL import Image
 
-from utils import getNumText
 from utils import *
 
 sys.path.append(os.path.dirname(os.getcwd() + "\\" + "tamil_ocr" + "\\" + "ocr_tamil"))
@@ -25,16 +24,29 @@ from EasyOCR.easyocr import easyocr
 
 ### 오른쪽 상단 testee_name 인식 함수 ###
 def readTesteeName(img, reader):
-  x1, y1, x2, y2 = (610, 30, 750, 90)
-  cropped_img = img.crop((x1, y1, x2, y2))
-  image_np = np.array(cropped_img)
-  
-  # tamilocr 사용
-  text = ""
-  ocr_text = OCR().predict(image_np)
-  text = getNumText(ocr_text)
+    x1, y1, x2, y2 = (610, 30, 750, 90)
+    cropped_img = img.crop((x1, y1, x2, y2))
+    image_np = np.array(cropped_img)
+    image = preprocess_image(image_np)
+    
+    # tamilocr 사용
+    text = ""
+    ocr_text = OCR().predict(image)
+    text = getNumText(ocr_text)
 
-  return text
+    print()
+    print("tamil ocr_text")
+    print(ocr_text)
+
+    ocr_text = reader.readtext(image, detail=0)
+    print("easyocr_text")
+    print(ocr_text)
+    
+    if not text:
+        ocr_text = reader.readtext(image, detail=0)
+        text = getNumText(ocr_text)
+    
+    return text
 
 
 ### 텍스트에서 testee_id와 page를 추출하는 함수 ###
