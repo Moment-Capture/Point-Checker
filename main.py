@@ -350,7 +350,7 @@ def show_grade():
     # 1-2. 응시자수
     canvas_r.create_text(
         40,
-        160,
+        90,
         anchor="nw",
         text="응시자수",
         fill="#000000",
@@ -368,7 +368,7 @@ def show_grade():
     )
     testee_num_field.place(
         x=340, 
-        y=155,
+        y=85,
         width=140,
         height=23
     )
@@ -376,7 +376,7 @@ def show_grade():
     # 1-3. 시험지 1부당 매수
     canvas_r.create_text(
         40,
-        90,
+        125,
         anchor="nw",
         text="시험지 1부당 매수",
         fill="#000000",
@@ -394,7 +394,7 @@ def show_grade():
     )
     copy_num_field.place(
         x=340, 
-        y=85,
+        y=120,
         width=140,
         height=23
     )
@@ -402,7 +402,7 @@ def show_grade():
     # 1-4. 총 문항 수  
     canvas_r.create_text(
         40,
-        125,
+        160,
         anchor="nw",
         text="총 문항 수",
         fill="#000000",
@@ -420,7 +420,7 @@ def show_grade():
     )
     total_qna_num_field.place(
         x=340, 
-        y=120,
+        y=155,
         width=140,
         height=23
     )
