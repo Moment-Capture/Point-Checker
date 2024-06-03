@@ -46,13 +46,6 @@ TOOL1_PATH = relative_to_btn_img("tool1.png")
 TOOL2_PATH = relative_to_btn_img("tool2.png")
 
 
-# FONT_PATH = DIR_PATH / "malgun.ttf"
-# ICON_PATH = DIR_PATH / "pointchecker.ico"
-
-# TOOL1_PATH = DIR_PATH / "tool1.png"
-# TOOL2_PATH = DIR_PATH / "tool2.png"
-
-
 
 ### from server import *
 def set_global(data):
@@ -337,7 +330,6 @@ def show_grade():
         fill="#000000",
         font=(FONT_PATH, 14 * -1)
     )
-    
     test_name = tk.StringVar()
     test_name_field = tk.Entry(
         bd=0,
@@ -355,61 +347,7 @@ def show_grade():
         height=23
     )
 
-    # 1-2. 시험지1부당매수
-    canvas_r.create_text(
-        40,
-        90,
-        anchor="nw",
-        text="시험지 1부당 매수",
-        fill="#000000",
-        font=(FONT_PATH, 14 * -1)
-    )
-
-    copy_num = tk.StringVar()
-    copy_num_field = tk.Entry(
-        bd=0,
-        bg="white",  # 배경색 (흰색)
-        fg="#000716",  # 텍스트 색상
-        highlightbackground="#d9d9d9",  # 테두리 색상
-        highlightthickness=1,
-        font=(FONT_PATH, 16 * -1),
-        textvariable=copy_num
-    )
-    copy_num_field.place(
-        x=340, 
-        y=85,
-        width=140,
-        height=23
-    )
-    
-    # 1-3. 총문항수  
-    canvas_r.create_text(
-        40,
-        125,
-        anchor="nw",
-        text="총 문항 수",
-        fill="#000000",
-        font=(FONT_PATH, 14 * -1)
-    )
-
-    total_qna_num = tk.StringVar()
-    total_qna_num_field = tk.Entry(
-        bd=0,
-        bg="white",  # 배경색 (흰색)
-        fg="#000716",  # 텍스트 색상
-        highlightbackground="#d9d9d9",  # 테두리 색상
-        highlightthickness=1,
-        font=(FONT_PATH, 16 * -1),
-        textvariable=total_qna_num
-    )
-    total_qna_num_field.place(
-        x=340, 
-        y=120,
-        width=140,
-        height=23
-    )
-
-    # 1-4. 응시자수
+    # 1-2. 응시자수
     canvas_r.create_text(
         40,
         160,
@@ -418,7 +356,6 @@ def show_grade():
         fill="#000000",
         font=(FONT_PATH, 14 * -1)
     )
-    
     testee_num = tk.StringVar()
     testee_num_field = tk.Entry(
         bd=0,
@@ -436,6 +373,58 @@ def show_grade():
         height=23
     )
 
+    # 1-3. 시험지 1부당 매수
+    canvas_r.create_text(
+        40,
+        90,
+        anchor="nw",
+        text="시험지 1부당 매수",
+        fill="#000000",
+        font=(FONT_PATH, 14 * -1)
+    )
+    copy_num = tk.StringVar()
+    copy_num_field = tk.Entry(
+        bd=0,
+        bg="white",  # 배경색 (흰색)
+        fg="#000716",  # 텍스트 색상
+        highlightbackground="#d9d9d9",  # 테두리 색상
+        highlightthickness=1,
+        font=(FONT_PATH, 16 * -1),
+        textvariable=copy_num
+    )
+    copy_num_field.place(
+        x=340, 
+        y=85,
+        width=140,
+        height=23
+    )
+    
+    # 1-4. 총 문항 수  
+    canvas_r.create_text(
+        40,
+        125,
+        anchor="nw",
+        text="총 문항 수",
+        fill="#000000",
+        font=(FONT_PATH, 14 * -1)
+    )
+    total_qna_num = tk.StringVar()
+    total_qna_num_field = tk.Entry(
+        bd=0,
+        bg="white",  # 배경색 (흰색)
+        fg="#000716",  # 텍스트 색상
+        highlightbackground="#d9d9d9",  # 테두리 색상
+        highlightthickness=1,
+        font=(FONT_PATH, 16 * -1),
+        textvariable=total_qna_num
+    )
+    total_qna_num_field.place(
+        x=340, 
+        y=120,
+        width=140,
+        height=23
+    )
+
     # 1-5. 문제유형
     canvas_r.create_text(
         40,
@@ -446,7 +435,7 @@ def show_grade():
         font=(FONT_PATH, 14 * -1)
     )
 
-    # 1-6. 객관식 체크박스 생성
+    # 1-5-1. 객관식 체크박스 생성
     test_category_mul = tk.IntVar(value=0)
     test_category_mul_checkbox = tk.Checkbutton(
         root,
@@ -462,7 +451,7 @@ def show_grade():
         y=190
     )
  
-    # 1-7. 단답식 체크박스 생성
+    # 1-5-2. 단답식 체크박스 생성
     test_category_sub = tk.IntVar(value=0)
     test_category_sub_checkbox = tk.Checkbutton(
         root,
@@ -708,7 +697,7 @@ def json_to_df_for_tables(data):
             testee_answers[testee_id+" O/X"] = {}
         
         testee_answers[testee_id][num] = testee_answer
-        
+
         # 문항번호가 누락되지 않은 문항에 대해서만 답 비교
 
         # if num != "-1":
