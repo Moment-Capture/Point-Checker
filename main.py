@@ -1,4 +1,6 @@
 from pathlib import Path
+from threading import Thread
+
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from tkinter import ttk
@@ -66,11 +68,14 @@ def getId():
 
 
 ## 서버 연결하는 함수 ##
-def start_connect(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
+def start_connect(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category, progress_bar):
+    global is_scoring
+    is_scoring = 1
+
     json_data = post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
     set_global(json_data)
-
-    return True
+    
+    finish_connect(json_data, progress_bar)
 
 
 ## 서버에 post하는 함수 ##
@@ -78,12 +83,24 @@ def post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_c
     global client_id
     client_id = getId()
 
-    global total_num
-    total_num = int(total_qna_num)
-
     json_data = getJsonData(client_id, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
 
     return json_data
+
+
+## 채점 종료 ##
+def finish_connect(json_data, progress_bar):
+    global is_scoring
+
+    if json_data and is_scoring:
+        progress_bar.stop()
+        progress_bar["value"]=100
+        tk.messagebox.showinfo("채점 완료", "채점이 완료되었습니다.\n채점 결과 확인 버튼을 누르세요.")
+    else:
+        print("채점 진행 중")
+        tk.messagebox.showinfo("안내", "채점이 진행 중입니다.")
+    
+    is_scoring = 0
 
 
 
@@ -97,7 +114,7 @@ entry_columns = []
 file_path_var = None
 answer_path_var = None
 file_name = ""
-total_num = 0
+is_scoring = 0
 
 
 ## 공통  ##
@@ -560,14 +577,22 @@ def show_grade():
             file_name = str(test_name.get())
 
             progress_bar.start(20)
+
+            tThread = Thread(target=start_connect, args=(file_path_var.get(), test_name.get(), copy_num.get(), total_qna_num.get(),
+                        testee_num.get(), [str(test_category_mul.get()), str(test_category_sub.get())], progress_bar))
+            tThread.setDaemon(True)
+            tThread.start()
             
             # 시험 정보가 모두 입력된 경우 채점 함수 호출
-            if (start_connect(file_path_var.get(), test_name.get(), copy_num.get(), total_qna_num.get(),
-                        testee_num.get(), [str(test_category_mul.get()), str(test_category_sub.get())])):
-                progress_bar.stop()
-                progress_bar['mode'] = 'determinate'
-                progress_bar["value"]=100
-                tk.messagebox.showinfo("채점 완료", "채점이 완료되었습니다.\n채점 결과 확인 버튼을 누르세요.")
+            # if (json_data):
+            #     progress_bar.stop()
+            #     progress_bar['mode'] = 'determinate'
+            #     progress_bar["value"]=100
+            #     tk.messagebox.showinfo("채점 완료", "채점이 완료되었습니다.\n채점 결과 확인 버튼을 누르세요.")
+            # else:
+            #     print("채점 진행 중")
+            #     tk.messagebox.showinfo("안내", "채점이 진행 중입니다.")
+
         else:
             # 시험 정보가 모두 입력되지 않은 경우 안내창 표시
             print("시험 정보가 다 안 채워짐")
@@ -602,7 +627,7 @@ def show_grade():
     )
 
     # 4-2. 진행 막대 생성
-    progress_bar = ttk.Progressbar(root, orient="horizontal", length=260, mode="indeterminate")
+    progress_bar = ttk.Progressbar(root, orient="horizontal", length=260, mode="determinate")
     progress_bar.place(x=350, y=565)
 
     # 4-3. 채점 결과 확인하기 버튼
@@ -690,11 +715,6 @@ def json_to_df_for_tables(data):
 
         if num == "-1" or num == "0":
             continue
-        
-        global total_num
-
-        if int(num) > total_num:
-            continue
 
         # 다중 정답일 경우 대괄호를 제외하고 문자열로 저장
         if isinstance(testee_answer, list):
@@ -707,7 +727,10 @@ def json_to_df_for_tables(data):
             count_x = 0
             testee_answers[testee_id] = {}
             testee_answers[testee_id+" O/X"] = {}
-        
+
+        if not (num in question_answer["answer"]):
+            continue
+
         testee_answers[testee_id][num] = testee_answer
 
         # 문항번호가 누락되지 않은 문항에 대해서만 답 비교
@@ -719,9 +742,6 @@ def json_to_df_for_tables(data):
         #     else:
         #         count_x += 1
         #         testee_answers[testee_id+" O/X"][num] = 'X'
-
-        if not (num in question_answer["answer"]):
-            continue
 
         if testee_answer == question_answer['answer'][num].replace(" ", ""):
             count_o += 1
@@ -744,11 +764,19 @@ def json_to_df_for_tables(data):
 
 def show_result():
     global json_data
+    data = json_data
+
+    if not json_data:
+        print()
+        print("채점 진행 중")
+        print()
+        
+        tk.messagebox.showinfo("안내", "채점이 진행 중입니다.")
+        
+        return    
     
     # Initialize Tkinter
     root2 = tk.Toplevel()
-
-    data = json_data
 
     # Create the PandasViewer instance
     viewer = PandasViewer(root2, dataframe=json_to_df_for_tables(data))
