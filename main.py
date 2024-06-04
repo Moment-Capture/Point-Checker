@@ -19,10 +19,6 @@ from pointchecker import getJsonData
 
 ##########################################################
 ##########################################################
-### import global_vars
-json_data = None
-
-
 
 ### from path import *
 ## assets의 상대 경로 ##
@@ -69,12 +65,12 @@ def getId():
 
 ## 서버 연결하는 함수 ##
 def start_connect(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category, progress_bar):
-    global is_scoring
-    is_scoring = 1
-
+    global is_scoring_finished
+    is_scoring_finished = 0
     json_data = post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
     set_global(json_data)
-    
+    is_scoring_finished = 1
+
     finish_connect(json_data, progress_bar)
 
 
@@ -90,17 +86,16 @@ def post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_c
 
 ## 채점 종료 ##
 def finish_connect(json_data, progress_bar):
-    global is_scoring
+    global is_scoring_finished
 
-    if json_data and is_scoring:
+    if json_data and is_scoring_finished:
         progress_bar.stop()
         progress_bar["value"]=100
         tk.messagebox.showinfo("채점 완료", "채점이 완료되었습니다.\n채점 결과 확인 버튼을 누르세요.")
     else:
         print("채점 진행 중")
         tk.messagebox.showinfo("안내", "채점이 진행 중입니다.")
-    
-    is_scoring = 0
+
 
 
 
@@ -113,8 +108,9 @@ widgets = []
 entry_columns = []
 file_path_var = None
 answer_path_var = None
+json_data = None
 file_name = ""
-is_scoring = 0
+is_scoring_finished = 0
 
 
 ## 공통  ##
@@ -578,20 +574,13 @@ def show_grade():
 
             progress_bar.start(20)
 
+            global is_scoring_finished
+            is_scoring_finished = 0
+
             tThread = Thread(target=start_connect, args=(file_path_var.get(), test_name.get(), copy_num.get(), total_qna_num.get(),
                         testee_num.get(), [str(test_category_mul.get()), str(test_category_sub.get())], progress_bar))
             tThread.setDaemon(True)
             tThread.start()
-            
-            # 시험 정보가 모두 입력된 경우 채점 함수 호출
-            # if (json_data):
-            #     progress_bar.stop()
-            #     progress_bar['mode'] = 'determinate'
-            #     progress_bar["value"]=100
-            #     tk.messagebox.showinfo("채점 완료", "채점이 완료되었습니다.\n채점 결과 확인 버튼을 누르세요.")
-            # else:
-            #     print("채점 진행 중")
-            #     tk.messagebox.showinfo("안내", "채점이 진행 중입니다.")
 
         else:
             # 시험 정보가 모두 입력되지 않은 경우 안내창 표시
@@ -733,16 +722,6 @@ def json_to_df_for_tables(data):
 
         testee_answers[testee_id][num] = testee_answer
 
-        # 문항번호가 누락되지 않은 문항에 대해서만 답 비교
-
-        # if num != "-1":
-        #     if testee_answer == question_answer['answer'][num].replace(" ", ""):
-        #         count_o += 1
-        #         testee_answers[testee_id+" O/X"][num] = 'O'
-        #     else:
-        #         count_x += 1
-        #         testee_answers[testee_id+" O/X"][num] = 'X'
-
         if testee_answer == question_answer['answer'][num].replace(" ", ""):
             count_o += 1
             testee_answers[testee_id+" O/X"][num] = 'O'
@@ -765,6 +744,17 @@ def json_to_df_for_tables(data):
 def show_result():
     global json_data
     data = json_data
+
+    global is_scoring_finished
+
+    if not is_scoring_finished:
+        print()
+        print("채점 진행 중")
+        print()
+        
+        tk.messagebox.showinfo("안내", "채점이 진행 중입니다.")
+
+        return 
 
     if not json_data:
         print()
