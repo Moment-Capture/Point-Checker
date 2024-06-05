@@ -8,13 +8,13 @@ from pointchecker import getMulSubDf
 # 경로 정의
 client_id = input("client id를 입력해 주세요: ")
 id_path = UPLOAD_FOLDER + "\\" + client_id
+file_path = input("파일 이름을 입력해 주세요: ")
 path = str(Path(id_path))
 jpg_path = path + "\\" + "jpg"
 temp_path = path + "\\" + "temp"
 
 
 def make_test_dir():
-    file_path = input("파일 이름을 입력해 주세요: ")
     pdf_path = "D:\\Dropbox\\Dropbox\\[대학]\\졸업 프로젝트\\캡스톤 그로스\\최종 데모" + "\\" + file_path
     print(pdf_path)
     
@@ -61,14 +61,20 @@ def id_detect_check():
 
 def exception_check():
     jpg_file_path_list = make_test_dir()
-    total_qna_num = input("총 문항 수를 입력해 주세요: ")
+    total_qna_num = 0
+    if file_path == "korea.pdf":
+        total_qna_num = 45
+    elif file_path == "math.pdf" or file_path == "math_name.pdf":
+        total_qna_num = 30
+    else:
+        total_qna_num = input("총 문항 수를 입력해 주세요: ")
 
     df = getMulSubDf(jpg_path, total_qna_num)
 
     df = fillOneDf(df)
 
     print()
-    print_full(df)
+    printFull(df)
 
     df.to_excel(path + "\\" + client_id + "_final_df.xlsx")
 

@@ -21,7 +21,7 @@ from EasyOCR.easyocr import easyocr
 
 
 # 인트로 출력
-def print_intro():
+def printIntro():
     print()
     print("========================")
     print("환영합니다.")
@@ -32,7 +32,7 @@ def print_intro():
 
 
 # 아웃트로 출력
-def print_outro():
+def printOutro():
     print()
     print("========================")
     print("감사합니다.")
@@ -41,11 +41,19 @@ def print_outro():
 
 
 # 모든 df cmd로 출력
-def print_full(df):
+def printFull(df):
     pd.set_option('display.max_rows', len(df))
     print(df)
     pd.reset_option('display.max_rows')
     return
+
+
+# 값 확인
+def printVal(val_name, val_data):
+    print()
+    print(str(val_name) + ": ")
+    print(str(val_data))
+    print()
 
 
 # 이미지와 박스 영역을 주면 박스 영역 추출
@@ -179,6 +187,22 @@ def dfToFinalDf(df):
     final_df = final_df.sort_index(ascending=True)
     final_df = final_df.reset_index(drop=False)
     return final_df
+
+
+# 만약 testee_df['num']에 빈 곳이 하나 있으면 없는 번호로 채우기
+def fillOneDf(testee_df):
+    if (testee_df["num"] == -1).sum() == 1:
+        missing_idx = testee_df[testee_df["num"] == -1].index[0]
+        existing_numbers = testee_df["num"][testee_df["num"] != -1].tolist()
+        existing_numbers = list(map(int, existing_numbers))
+
+        new_number = 1
+        while new_number in existing_numbers:
+            new_number += 1
+            
+        testee_df.at[missing_idx, "num"] = new_number
+    
+    return testee_df
 
 
 # 입력 받은 label을 int로 변환
@@ -324,6 +348,34 @@ def getNumTamil(img):
     return num
 
 
+def checkNum(num, total_num, num_list):
+    if num in num_list:
+        num = -1
+    if num > total_num:
+        num = -1
+    
+    return num
+
+
+# qna_num 반환
+def getQnaNum(num_list, img, total_qna_num, reader):
+    total_num = int(total_qna_num)
+    qna_num = -1
+    num = getNumTamil(img)
+    num = checkNum(num, total_num, num_list)
+    
+    if num == -1:
+        num = getNumEasy(img, reader)
+        num = checkNum(num, total_num, num_list)
+    
+    qna_num = num
+
+    if qna_num != -1:
+        num_list.append(qna_num)
+    
+    return qna_num
+
+
 # 문항 번호 반환 - EasyOCR
 def getTextEasy(img, reader):
     text = ""
@@ -382,34 +434,6 @@ def getAnswer(img, reader):
     return text 
 
 
-def checkNum(num, total_num, num_list):
-    if num in num_list:
-        num = -1
-    if num > total_num:
-        num = -1
-    
-    return num
-
-
-# qna_num 반환
-def getQnaNum(num_list, img, total_qna_num, reader):
-    total_num = int(total_qna_num)
-    qna_num = -1
-    num = getNumTamil(img)
-    num = checkNum(num, total_num, num_list)
-    
-    if num == -1:
-        num = getNumEasy(img, reader)
-        num = checkNum(num, total_num, num_list)
-    
-    qna_num = num
-
-    if qna_num != -1:
-        num_list.append(qna_num)
-    
-    return qna_num
-
-
 # ocr_text에서 문자 전체 추출
 def getString(ocr_text):
     text = ""
@@ -425,19 +449,3 @@ def getStringTamil(img):
     text = getString(ocr_text)
     
     print("문항 감지 안 됨: " + text)
-
-
-# 만약 testee_df['num']에 빈 곳이 하나 있으면 없는 번호로 채우기
-def fillOneDf(testee_df):
-    if (testee_df["num"] == -1).sum() == 1:
-        missing_idx = testee_df[testee_df["num"] == -1].index[0]
-        existing_numbers = testee_df["num"][testee_df["num"] != -1].tolist()
-        existing_numbers = list(map(int, existing_numbers))
-
-        new_number = 1
-        while new_number in existing_numbers:
-            new_number += 1
-            
-        testee_df.at[missing_idx, "num"] = new_number
-    
-    return testee_df

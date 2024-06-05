@@ -31,8 +31,8 @@ def detect_multiple(path, num_list, total_qna_num, reader):
 
     # Yolov8 사용
     model_mul = YOLO(multiple_path)
-    # results = model_mul(source=images, save=False, save_crop=False)
-    results = model_mul(source=images, save=True, save_crop=True, project=mul_result_path)
+    # results = model_mul(source=images, save=False, save_crop=False, conf=0.5)
+    results = model_mul(source=images, save=True, save_crop=True, conf=0.5, project=mul_result_path)
     names = model_mul.names
 
     for result in results:

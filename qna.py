@@ -121,7 +121,7 @@ def categorize_qna(path):
     # Yolov8 사용
     model_qna = YOLO(qna_path)
     # results_qna = model_qna(source=images, conf=0.75, save=False, save_crop=False)
-    results_qna = model_qna(source=images, conf=0.75, save=True, save_crop=True, project=qna_result_path)
+    results_qna = model_qna(source=images, conf=0.6, save=True, save_crop=True, project=qna_result_path)
 
     names = model_qna.names
 

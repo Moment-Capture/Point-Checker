@@ -45,7 +45,7 @@ def plural_check(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
     point_eta = end - start
 
     print()
-    print_full(df.set_index(keys=["testee_id", "file"], drop=True))
+    printFull(df.set_index(keys=["testee_id", "file"], drop=True))
     print()
     print("point_eta: " + f"{point_eta:.2f} sec")
     print()
@@ -207,7 +207,7 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
     print()
     print(id_match)
     # print()
-    # print_full(display_testee_jpg_df)
+    # printFull(display_testee_jpg_df)
     
     # 응시자 수만큼 해당 과정 반복
     for id_idx, id_row in id_match.iterrows():

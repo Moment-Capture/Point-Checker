@@ -6,7 +6,7 @@ from pathlib import Path
 from natsort import os_sorted
 
 from path import *
-from utils import cropBox, deleteDuplicateFiles, getQnaNum, getAnswer
+from utils import cropBox, deleteDuplicateFiles, getQnaNum, getAnswer, printVal
 
 sys.path.append(os.path.dirname(os.getcwd() + "\\" + "ultralytics" + "\\" + "ultralytics"))
 from ultralytics import YOLO
@@ -62,10 +62,14 @@ def detect_subjective(path, num_list, total_qna_num, reader):
                 
                 # 적힌 단답 answer 감지
                 else:
-                    # 이미 있는 파일의 경우 건너뛰기
+                    # answer가 여러 개인 경우
                     if file in files:
-                        continue
-                    files.append(file)
+                        if answer == "":
+                            answer = getAnswer(img, reader)
+                        else:
+                            continue
+                    else:
+                        files.append(file)
                     
                     # ocr 사용
                     answer = getAnswer(img, reader)
