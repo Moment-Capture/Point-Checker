@@ -26,7 +26,7 @@ def make_test_dir():
     makeFolder(jpg_path)
     makeFolder(jpg_path + "\\" + "mul")
     makeFolder(jpg_path + "\\" + "sub")
-    print("test 폴더 생성 완료")
+    print(client_id + " 폴더 생성 완료")
 
     # pdf 파일 탐지
     original_pdf_file_path_list = []
@@ -70,7 +70,7 @@ def exception_check():
     print()
     print_full(df)
 
-    df.to_excel(path + "\\" +"final_df.xlsx")
+    df.to_excel(path + "\\" + client_id + "_final_df.xlsx")
 
 
 exception_check()
