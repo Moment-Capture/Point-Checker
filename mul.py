@@ -60,7 +60,7 @@ def detect_multiple(path, num_list, total_qna_num, reader):
                 # 체크한 선지 번호 check 감지
                 else:
                     check = labelToInt(names[int(cls)])
-                    if not (check in checklist):
+                    if not (check in check_list):
                         check_list.append(check)           
             
             if (len(check_list) > 1):
