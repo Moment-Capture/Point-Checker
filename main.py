@@ -149,29 +149,29 @@ def insert_page_number(num_students, file_path):
     pdf_document = fitz.open(file_path)
     num_pages = len(pdf_document)
 
-    # Get page width and height
-    page_width = pdf_document[0].rect.width
-    page_height = pdf_document[0].rect.height
+    first_page = pdf_document[0]
+    # first_page = pdf_document.newPage()
 
-    print(page_width)
-    print(page_height)
-    print()
+    # Get page width and height
+    page_width = first_page.rect.width
+    page_height = first_page.rect.height
 
     # Convert start and end points to coordinates relative to top-right corner
     start_point = (page_width - 180, 65)
     end_point = (page_width - 60, 65)
 
-    print(start_point)
-    print(end_point)
-
     for i in range(0, num_students):
-        output_pdf_path = os.path.splitext(file_path)[0] + f"_{i+1}.pdf"
-        pdf_document = fitz.open(file_path)
+        output_pdf_path = os.path.splitext(file_path)[0] + "_new" + f"_{i+1}.pdf"
 
         #첫 장에 이름 적는 칸
         page = pdf_document[0]
+        rotation = page.rotation
+        # page.clean_contents()
+        # page = pdf_document.newPage()
+        page.wrap_contents()
         text = "ID : "
-        page.insert_text((page_width-220, 60), text, fontsize=16, fontname="courier")
+        point = fitz.Point(page_width-220, 60)
+        page.insert_text(point*page.derotation_matrix, text, fontsize=16, fontname="courier", rotate=page.rotation)
         page.draw_line(start_point, end_point)
 
         for j in range(0, num_pages):
@@ -179,13 +179,13 @@ def insert_page_number(num_students, file_path):
             text = f"{i+1}-{j+1}"
 
             # 삽입할 위치 (x, y 좌표)
-            insert_position = (60, 60)  # 적절한 위치로 수정 필요
+            insert_position = fitz.Point(60, 60)  # 적절한 위치로 수정 필요
 
             # Select the first page
             page = pdf_document[j]
 
             # Start editing the page
-            page.insert_text(insert_position, text, fontsize=18, fontname="courier")
+            page.insert_text(insert_position*page.derotation_matrix, text, fontsize=18, fontname="courier", rotate=page.rotation)
 
         # Save the changes to a new PDF
         pdf_document.save(output_pdf_path)
@@ -266,7 +266,7 @@ def show_transfer():
         35.0,
         130.0,
         anchor="nw",
-        text="2. 변환할 시험지 파일을 업로드 하세요. (파일 확장자: .pdf)\n   (선택한 시험지 파일과 같은 위치에 양식이 적용된 새파일이 생성됩니다.)",
+        text="2. 변환할 시험지 파일을 업로드 하세요. (파일 확장자: .pdf)\n   (선택한 시험지 파일과 같은 위치에 양식이 적용된 새 파일이 생성됩니다.)",
         fill="#000000",
         font=(FONT_PATH, 14 * -1)
     )
