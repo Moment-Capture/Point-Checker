@@ -15,8 +15,9 @@ def crop_match(cropped_qna_arr, crop_obj, match_path, mul_save_idx, path, mul_sa
     # cropped_arr에 저장된 crop_obj 매칭
     match_result_path = path + "\\" + "result_match"
     model_match = YOLO(match_path)
-    # results_match = model_match(source=crop_obj, conf=0.6, save=False)
-    results_match = model_match(source=crop_obj, conf=0.6, save=True, save_crop=True, project=match_result_path)
+    # results_match = model_match(source=crop_obj, conf=0.6, save=False, save_crop=False)
+    # results_match = model_match(source=crop_obj, conf=0.6, save=True, save_crop=True, project=match_result_path)
+    results_match = model_match(source=crop_obj, conf=0.6, save=False, save_crop=False)
     
     names = model_match.names
     result = results_match[0]
@@ -121,7 +122,8 @@ def categorize_qna(path):
     # Yolov8 사용
     model_qna = YOLO(qna_path)
     # results_qna = model_qna(source=images, conf=0.75, save=False, save_crop=False)
-    results_qna = model_qna(source=images, conf=0.6, save=True, save_crop=True, project=qna_result_path)
+    # results_qna = model_qna(source=images, conf=0.6, save=True, save_crop=True, project=qna_result_path)
+    results_qna = model_qna(source=images, conf=0.75, save=False, save_crop=False)
 
     names = model_qna.names
 

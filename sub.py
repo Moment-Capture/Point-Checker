@@ -32,7 +32,8 @@ def detect_subjective(path, num_list, total_qna_num, reader):
     # Yolov8 사용
     model_sub = YOLO(subjective_path)
     # results = model_sub(source=images, save=False, save_crop=False, conf=0.3)
-    results = model_sub(source=images, save=True, save_crop=True, conf=0.3, project=sub_result_path)
+    # results = model_sub(source=images, save=True, save_crop=True, conf=0.3, project=sub_result_path)
+    results = model_sub(source=images, save=False, save_crop=False, conf=0.3)
     names = model_sub.names
 
     # 파일 리스트 생성
