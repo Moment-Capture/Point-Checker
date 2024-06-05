@@ -1,1 +1,1 @@
-# Point-Checker-CPU
+# Point-Checker
