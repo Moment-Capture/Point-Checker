@@ -263,8 +263,11 @@ def pointchecker(id_path, pdf_path, test_name, copy_num, total_qna_num, testee_n
 
     # temp 폴더 삭제
     deleteFolder(temp_path)
+    
+    # id 폴더 삭제
+    # deleteFolder(id_path)
 
     # upload 폴더 삭제
-    deleteFolder(UPLOAD_FOLDER)
+    # deleteFolder(UPLOAD_FOLDER)
 
     return df

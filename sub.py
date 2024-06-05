@@ -14,10 +14,10 @@ from ultralytics import YOLO
 
 def detect_subjective(path, num_list, total_qna_num, reader):
     # 경로 정의
-    sub_path = path + "/sub"
-
-    model_path = BE_PATH + "/models"
-    subjective_path = model_path + "/subjective/weights/best.pt"
+    sub_path = path + "\\" + "sub"
+    sub_result_path = path + "\\" + "result_sub"
+    model_path = BE_PATH + "\\" + "models"
+    subjective_path = model_path + "\\" + "subjective" + "\\" + "weights" + "\\" + "best.pt"
 
     # 결과 저장을 위한 df 선언
     df = pd.DataFrame(columns=["file", "num", "testee_answer", "correct_answer"])
@@ -31,7 +31,8 @@ def detect_subjective(path, num_list, total_qna_num, reader):
 
     # Yolov8 사용
     model_sub = YOLO(subjective_path)
-    results = model_sub(source=images, save=False, save_crop=False, conf=0.3)
+    # results = model_sub(source=images, save=False, save_crop=False, conf=0.3)
+    results = model_sub(source=images, save=True, save_crop=True, conf=0.3, project=sub_result_path)
     names = model_sub.names
 
     # 파일 리스트 생성

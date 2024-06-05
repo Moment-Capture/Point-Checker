@@ -14,10 +14,10 @@ from ultralytics import YOLO
 
 def detect_multiple(path, num_list, total_qna_num, reader):
     # 경로 정의
-    mul_path = path + "/mul"
-
-    model_path = BE_PATH + "/models"
-    multiple_path = model_path + "/multiple/weights/best.pt"
+    mul_path = path + "\\" + "mul"
+    mul_result_path = path + "\\" + "result_mul"
+    model_path = BE_PATH + "\\" + "models"
+    multiple_path = model_path + "\\" + "multiple" + "\\" + "weights" + "\\" + "best.pt"
 
     # 결과 저장을 위한 df 선언
     df = pd.DataFrame(columns=["file", "num", "testee_answer", "correct_answer"])
@@ -31,7 +31,8 @@ def detect_multiple(path, num_list, total_qna_num, reader):
 
     # Yolov8 사용
     model_mul = YOLO(multiple_path)
-    results = model_mul(source=images, save=False, save_crop=False)
+    # results = model_mul(source=images, save=False, save_crop=False)
+    results = model_mul(source=images, save=True, save_crop=True, project=mul_result_path)
     names = model_mul.names
 
     for result in results:
