@@ -52,13 +52,13 @@ def set_global(data):
 
 
 ## id 생성 ##
-def getId():
+def getId(test_name):
     # client_ip = ip.get()
     access_now = datetime.datetime.now()
     access_date = access_now.strftime("%Y-%m-%d")
     access_time = access_now.strftime("%H-%M-%S")
     # client_id = client_ip + "_" + access_date + "_" + access_time
-    client_id = access_date + "_" + access_time
+    client_id = access_date + "_" + access_time + "_" + test_name
     
     return client_id
 
@@ -77,7 +77,7 @@ def start_connect(pdf_path, test_name, copy_num, total_qna_num, testee_num, test
 ## 서버에 post하는 함수 ##
 def post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
     global client_id
-    client_id = getId()
+    client_id = getId(test_name)
 
     json_data = getJsonData(client_id, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
 
