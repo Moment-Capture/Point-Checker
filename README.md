@@ -16,7 +16,7 @@
 # 서비스 소개
 ## 시험지 양식 적용
 <p><img width="500" alt="시험지_양식_적용_화면" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/a462b027-2886-4835-8f5b-02fbf3045887"></br></br>
- <img width="300" alt="시험지_양식_예시_화면" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/f70b9d1a-87f5-4bd2-9f5f-76d48be52a19"> </p>
+ <img width="400" alt="시험지_양식_예시_화면" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/f70b9d1a-87f5-4bd2-9f5f-76d48be52a19"> </p>
 </br>
 
 - 시험지 원본 파일을 입력받으면 시험지 양식이 적용된 파일을 반환합니다.
