@@ -56,7 +56,7 @@ git clone https://github.com/Moment-Capture/Point-Checker.git
 pip install -r requirements.txt
 ```
 Python 3.9 이상 환경에서 구동 가능합니다.
-</br>
+</br></br>
 
 3. main.py 실행
 ```bash
