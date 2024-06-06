@@ -145,7 +145,7 @@ python main.py
 ## 라이브러리
 - [Yolov8](https://github.com/ultralytics/yolov8) </br>
 - [EasyOCR](https://github.com/JaidedAI/EasyOCR) </br>
-- [Tamil-Ocr](https://github.com/tamil-ocr/tamil-ocr) </br>
+- [Tamil-Ocr](https://github.com/gnana70/tamil_ocr) </br>
 </br></br>
 
 ## 참고 자료
