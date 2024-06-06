@@ -66,8 +66,12 @@ python main.py
 
 # 기술 소개
 ## 시스템 구조도
-![pointchecker-시스템 아키텍쳐2 drawio](https://github.com/Moment-Capture/Point-Checker/assets/112560299/be4cfb40-7a8b-4f5e-8cbd-521b39dc5826)
+![pointchecker-시스템 아키텍쳐3 drawio](https://github.com/Moment-Capture/Point-Checker/assets/112560299/092b7eef-2058-4035-b67b-5563375ec7ef)
 </br>
+- Tkinter GUI를 통해 사용자와 인터렉션
+- pandastable로 생성된 엑셀 파일을 출력물로 전달
+- Yolov8을 통해 객체 인식
+- EasyOCR, Tamil-OCR을 통해 OCR
 </br></br>
 
 ## 채점 엔진
