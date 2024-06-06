@@ -66,7 +66,7 @@ python main.py
 
 # 기술 소개
 ## 시스템 구조도
-<p><img width="600" alt="시스템 아키텍쳐3" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/69b3334a-2893-47d1-b147-8fd58f1ccee2"></p>
+<p><img width="1000" alt="시스템 아키텍쳐3" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/69b3334a-2893-47d1-b147-8fd58f1ccee2"></p>
 </br></br>
 - Tkinter GUI를 통해 사용자와 인터렉션
 - pandastable로 생성된 엑셀 파일을 출력물로 전달
@@ -75,7 +75,7 @@ python main.py
 </br></br>
 
 ## 채점 엔진
-<p><img width="400" alt="채점 플로우" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/36731381-7ed5-4c7a-81dd-104b1313580c"></p>
+<p><img width="1000" alt="채점 플로우" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/4e786b3a-58c1-4f7e-aef3-8201087fba65"></p>
 </br>
 </br></br>
 
