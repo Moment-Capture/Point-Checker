@@ -43,8 +43,7 @@
 </br></br>
 
 
-## 실행 방법
-### (1) 파이썬 파일을 사용하는 경우
+# 실행 방법
 1. 리포지토리 클론
 ```bash
 git clone https://github.com/Moment-Capture/Point-Checker.git
@@ -64,11 +63,6 @@ pip install -r requirements.txt
 python main.py
 ```
 </br>
- 
-
-### (2) .exe 어플리케이션 사용하는 경우
-POINT-CHECKER.exe 파일을 누르면 실행됩니다. </br>
-</br></br>
 
 # 기술 소개
 ## 시스템 구조도
