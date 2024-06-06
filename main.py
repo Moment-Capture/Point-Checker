@@ -110,7 +110,7 @@ file_path_var = None
 answer_path_var = None
 json_data = None
 file_name = ""
-is_scoring_finished = 0
+is_scoring_finished = 1
 
 
 ## 공통  ##
@@ -567,6 +567,17 @@ def show_grade():
     
     # 응시자수, 한부당 매수 확인 후 서버 전달
     def check_entries_and_start_grading():
+        global is_scoring_finished
+
+        if not is_scoring_finished:
+            print()
+            print("채점 진행 중")
+            print()
+        
+            tk.messagebox.showinfo("안내", "채점이 진행 중입니다.")
+
+            return 
+        
         # 텍스트 필드가 모두 채워졌는지 확인
         if testee_num.get() and copy_num.get() and total_qna_num.get() and file_path_var.get() and answer_path_var.get() and test_name.get():
             global file_name
@@ -574,7 +585,6 @@ def show_grade():
 
             progress_bar.start(20)
 
-            global is_scoring_finished
             is_scoring_finished = 0
 
             tThread = Thread(target=start_connect, args=(file_path_var.get(), test_name.get(), copy_num.get(), total_qna_num.get(),
@@ -696,13 +706,29 @@ def json_to_df_for_tables(data):
 
     # 필요한 정보 testee_id별 'num':'testee_answer'를 딕셔너리로 저장하는 함수 
     testee_answers = {}
+    total_num = len(question_answer["answer"])
+    count_o = 0
 
     for entry in data:
         testee_id = entry.get('testee_id')
         num = str(entry.get('num'))
         testee_answer = entry.get('testee_answer')
 
-        if num == "-1" or num == "0":
+        if testee_id not in testee_answers:
+            count_o = 0
+            testee_answers[testee_id] = {}
+            testee_answers[testee_id+" O/X"] = {}
+            testee_answers[testee_id+" O/X"]['정답'] = ""
+            testee_answers[testee_id+" O/X"]['오답'] = ""
+            testee_answers[testee_id+" O/X"]['총 문항수'] = str(total_num)
+
+            for ans_num in question_answer['answer']:
+                if ans_num not in testee_answers[testee_id]:
+                    testee_answers[testee_id][ans_num] = ""
+                if ans_num not in testee_answers[testee_id+" O/X"]:
+                    testee_answers[testee_id+" O/X"][ans_num] = 'X'
+
+        if not num in question_answer["answer"]:
             continue
 
         # 다중 정답일 경우 대괄호를 제외하고 문자열로 저장
@@ -711,29 +737,16 @@ def json_to_df_for_tables(data):
         else:
             testee_answer = str(testee_answer)
 
-        if testee_id not in testee_answers:
-            count_o = 0
-            count_x = 0
-            testee_answers[testee_id] = {}
-            testee_answers[testee_id+" O/X"] = {}
-
-        if not (num in question_answer["answer"]):
-            continue
-
         testee_answers[testee_id][num] = testee_answer
 
         if testee_answer == question_answer['answer'][num].replace(" ", ""):
             count_o += 1
             testee_answers[testee_id+" O/X"][num] = 'O'
-        else:
-            count_x += 1
-            testee_answers[testee_id+" O/X"][num] = 'X'
-
+        
         testee_answers[testee_id+" O/X"]['정답'] = str(count_o)
 
-        testee_answers[testee_id+" O/X"]['오답'] = str(count_x)
+        testee_answers[testee_id+" O/X"]['오답'] = str(total_num-count_o)
 
-        testee_answers[testee_id+" O/X"]['총 문항수'] = str(count_o+count_x)
 
     # 답 딕셔너리와 응시자 답안 딕셔너리를 합쳐서 data로 삽입
     df = pd.DataFrame.from_dict(data={**question_answer, **testee_answers}, orient='index', dtype='str')
