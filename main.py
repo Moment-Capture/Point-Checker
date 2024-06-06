@@ -51,6 +51,12 @@ def set_global(data):
     json_data = data
 
 
+def getTestName(test_name):
+    pattern = r'[^a-zA-Z0-9\s]'
+    test_name = re.sub(pattern, '', test_name)
+    test_name
+
+
 ## id 생성 ##
 def getId(test_name):
     pattern = r'[^a-zA-Z0-9\s]'
@@ -77,7 +83,7 @@ def start_connect(pdf_path, test_name, copy_num, total_qna_num, testee_num, test
 
 ## 서버에 post하는 함수 ##
 def post_server(pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category):
-    global client_id
+    test_name = getTestName(test_name)
     client_id = getId(test_name)
 
     json_data = getJsonData(client_id, pdf_path, test_name, copy_num, total_qna_num, testee_num, test_category)
