@@ -7,6 +7,7 @@ from tkinter import ttk
 from tkinter import *
 
 import os
+import re
 import fitz
 import json
 import datetime
@@ -52,11 +53,12 @@ def set_global(data):
 
 ## id 생성 ##
 def getId(test_name):
-    # client_ip = ip.get()
+    pattern = r'[^a-zA-Z0-9\s]'
+    test_name = re.sub(pattern, '', test_name)
+
     access_now = datetime.datetime.now()
     access_date = access_now.strftime("%Y-%m-%d")
     access_time = access_now.strftime("%H-%M-%S")
-    # client_id = client_ip + "_" + access_date + "_" + access_time
     client_id = access_date + "_" + access_time + "_" + test_name
     
     return client_id
