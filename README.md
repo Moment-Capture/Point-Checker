@@ -18,24 +18,28 @@
 <p><img width="500" alt="시험지_양식_적용_화면" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/a462b027-2886-4835-8f5b-02fbf3045887"></br></br>
  <img width="300" alt="시험지_양식_예시_화면" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/f70b9d1a-87f5-4bd2-9f5f-76d48be52a19"> </p>
 </br>
-시험지 원본 파일을 입력받으면 시험지 양식이 적용된 파일을 반환합니다.
+
+- 시험지 원본 파일을 입력받으면 시험지 양식이 적용된 파일을 반환합니다.
 </br></br>
  
 ## 채점하기
 <p><img width="500" alt="채점하기_화면" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/afb50d49-50bc-4201-9b93-59f3daa1a90a"></p>
-사용자는 시험 정보를 입력하고 응시한 시험지를 스캔한 파일(.pdf)과 답 파일(.xlsx)을 업로드 합니다. </br>
-‘채점하기' 버튼을 통해 시험지 채점을 수행하여 채점 결과를 반환합니다. </br>
+
+- 사용자는 시험 정보를 입력하고 응시한 시험지를 스캔한 파일(.pdf)과 답 파일(.xlsx)을 업로드 합니다. </br>
+- ‘채점하기' 버튼을 통해 시험지 채점을 수행하여 채점 결과를 반환합니다. </br>
 </br></br>
  
 ## 채점 결과 확인하기
 <p><img width="500" alt="채점_결과_확인_화면" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/c1c80708-3f88-4ef9-9b44-5d5e8c1c6680"></p>
-채점 결과는 응시자가 시험지에 작성한 응시자 ID를 추출하여, 각 응시자의 문항별 응답과 정답 여부를 정오표 형태로 출력합니다. </br>
-사용자는 해당 데이터를 직접 추가, 수정, 삭제할 수 있으며, 엑셀 파일로 다운로드 할 수 있습니다. </br>
+
+- 채점 결과는 응시자가 시험지에 작성한 응시자 ID를 추출하여, 각 응시자의 문항별 응답과 정답 여부를 정오표 형태로 출력합니다. </br>
+- 사용자는 해당 데이터를 직접 추가, 수정, 삭제할 수 있으며, 엑셀 파일로 다운로드 할 수 있습니다. </br>
 </br></br>
 
 ## 채점 결과 저장하기
 <p><img width="500" alt="채점_결과_저장_화면" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/18df3402-4c92-4345-aaa8-58b2a6a74012"></p>
-채점 결과를 엑셀로 저장했을 때 화면입니다다. </br>
+
+- 채점 결과를 엑셀로 저장했을 때 화면입니다. </br>
 </br></br>
 
 
@@ -140,9 +144,14 @@ POINT-CHECKER.exe 파일을 누르면 실행됩니다. </br>
 
 
 # 레퍼런스
+## 라이브러리
 - [Yolov8](https://github.com/ultralytics/yolov8) </br>
 - [EasyOCR](https://github.com/JaidedAI/EasyOCR) </br>
 - [Tamil-Ocr](https://github.com/tamil-ocr/tamil-ocr) </br>
+</br></br>
+
+## 참고 자료
+- [2021CapstoneDesign](https://velog.io/@nayeon_p00/series/2021CapstoneDesign) </br>
 </br></br>
 
 
