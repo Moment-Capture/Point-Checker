@@ -71,35 +71,33 @@ python main.py
 </br></br>
 
 ## 채점 엔진
-### 시스템 플로우
 ![pointchecker-채점 플로우 drawio](https://github.com/Moment-Capture/Point-Checker/assets/112560299/cf238583-86c3-4412-9f26-faf24f70ce3e)
 </br>
 </br></br>
 
-### 모델 소개
-#### 응시자 인식 모델
+### 응시자 인식 모델
 - 사전에 적용된 양식을 통해 응시자를 인식합니다. </br>
 - EasyOCR을 통해 사용자 아이디를 추출합니다. </br>
 </br></br>
 
-#### QNA 분류 모델
+### QNA 분류 모델
 - Yolov8으로 각 시험지의 문항 영역을 탐지하고 종류에 맞게 분류합니다. </br>
 - 사용한 라벨: multiple, multiple_cropped, subjective, subjective_cropped, q_mark, s_period, q_period </br>
 </br></br>
 
-#### 잘린 QNA 문항 매칭 모델
+### 잘린 QNA 문항 매칭 모델
 - Yolov8으로 잘린 문항을 분류하고, 일치하는 유형을 매칭합니다. </br>
 - 사용한 라벨: front_num, front_1, front_2, front_3, front_4, front_5, back_num, back_1, back_2, back_3, back_4, back_5, etc </br>
 </br></br>
 
-#### 객관식 인식 모델
+### 객관식 인식 모델
 - Yolov8으로 문항 번호와 선지를 인식합니다. </br>
 - Yolov8 라벨링 결과를 통해 선지를 분류합니다. </br>
 - EasyOCR을 통해 문항 번호를 추출합니다. </br>
 - 사용한 라벨: num, check1, check2, check3, check4, check5 </br>
 </br></br>
 
-#### 단답식 인식 모델
+### 단답식 인식 모델
 - Yolov8으로 문항 번호와 답안을 인식합니다. </br>
 - tamil-ocr을 통해 필기 답안을 인식합니다. </br>
 - EasyOCR을 통해 문항 번호를 추출합니다. </br>
