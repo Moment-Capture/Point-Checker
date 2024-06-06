@@ -66,7 +66,7 @@ python main.py
 
 # 기술 소개
 ## 시스템 구조도
-![pointchecker-시스템 아키텍쳐3 drawio](https://github.com/Moment-Capture/Point-Checker/assets/112560299/092b7eef-2058-4035-b67b-5563375ec7ef)
+![pointchecker-시스템 아키텍쳐3 drawio](https://github.com/Moment-Capture/Point-Checker/assets/112560299/7e6d2d1c-e5fa-4d5c-b68b-f04bfb84ee64)
 </br>
 - Tkinter GUI를 통해 사용자와 인터렉션
 - pandastable로 생성된 엑셀 파일을 출력물로 전달
