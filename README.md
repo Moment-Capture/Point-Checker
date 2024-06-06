@@ -6,20 +6,20 @@ POINT-CHECKER - 객체 인식과 OCR를 활용한 객관·단답식 시험 채�
 ## 실행 방법
 ### 파이썬 파일 사용
 1. 리포지토리 클론
-'''
+```bash
 git clone https://github.com/Moment-Capture/Point-Checker.git
-'''
+```
 
 2. 라이브러리 설치
-'''
+```bash
 pip install -r requirements.txt
-'''
+```
 Python 3.9 이상 환경에서 개발되었습니다.
 
 3. main.py 실행
-'''
+```bash
 python main.py
-'''
+```
 
 ### .exe 어플리케이션 사용
 POINT-CHECKER.exe 파일을 누르면 실행됩니다.
