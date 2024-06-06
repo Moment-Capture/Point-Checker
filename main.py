@@ -54,14 +54,11 @@ def set_global(data):
 def getTestName(test_name):
     pattern = r'[^a-zA-Z0-9\s]'
     test_name = re.sub(pattern, '', test_name)
-    test_name
+    return test_name
 
 
 ## id 생성 ##
 def getId(test_name):
-    pattern = r'[^a-zA-Z0-9\s]'
-    test_name = re.sub(pattern, '', test_name)
-
     access_now = datetime.datetime.now()
     access_date = access_now.strftime("%Y-%m-%d")
     access_time = access_now.strftime("%H-%M-%S")
