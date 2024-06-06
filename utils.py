@@ -2,7 +2,6 @@ import os
 import sys
 import cv2
 import shutil
-import datetime
 
 import numpy as np
 import pandas as pd
@@ -11,13 +10,13 @@ from pathlib import Path
 from natsort import os_sorted
 
 from pdf2image import convert_from_path
-from PIL import Image
 
 sys.path.append(os.path.dirname(os.getcwd() + "\\" + "tamil_ocr" + "\\" + "ocr_tamil"))
 from ocr_tamil.ocr import OCR
 
-sys.path.append(os.path.dirname(os.getcwd() + "\\" + "EasyOCR"))
-from EasyOCR.easyocr import easyocr
+# sys.path.append(os.path.dirname(os.getcwd() + "\\" + "EasyOCR"))
+# from EasyOCR.easyocr import easyocr
+import easyocr
 
 
 # 인트로 출력

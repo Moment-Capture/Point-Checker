@@ -11,7 +11,6 @@ import fitz
 import json
 import datetime
 
-import public_ip as ip
 import pandas as pd
 from pandastable import Table
 

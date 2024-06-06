@@ -7,11 +7,11 @@ from PIL import Image
 
 from utils import *
 
-sys.path.append(os.path.dirname(os.getcwd() + "\\" + "tamil_ocr" + "\\" + "ocr_tamil"))
-from ocr_tamil.ocr import OCR
+# sys.path.append(os.path.dirname(os.getcwd() + "\\" + "tamil_ocr" + "\\" + "ocr_tamil"))
+# from ocr_tamil.ocr import OCR
 
-sys.path.append(os.path.dirname(os.getcwd() + "\\" + "EasyOCR"))
-from EasyOCR.easyocr import easyocr
+# sys.path.append(os.path.dirname(os.getcwd() + "\\" + "EasyOCR"))
+# from EasyOCR.easyocr import easyocr
 
 
 ### 텍스트 부분 잘라내기 함수 ###

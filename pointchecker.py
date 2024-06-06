@@ -6,13 +6,13 @@ import pandas as pd
 from pathlib import Path
 from natsort import os_sorted
 
-from qna import categorize_qna
-from mul import detect_multiple
-from sub import detect_subjective
-
 from path import *
 from utils import *
 from recognize import *
+
+from qna import categorize_qna
+from mul import detect_multiple
+from sub import detect_subjective
 
 
 ALLOWED_FILE_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
