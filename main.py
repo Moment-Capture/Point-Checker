@@ -1,5 +1,6 @@
-from pathlib import Path
-from threading import Thread
+if __name__ == "__main__":
+    from multiprocessing import freeze_support
+    freeze_support()
 
 import tkinter as tk
 from tkinter import filedialog, messagebox
@@ -13,6 +14,8 @@ import json
 import datetime
 
 import pandas as pd
+from pathlib import Path
+from threading import Thread
 from pandastable import Table
 
 from pointchecker import getJsonData

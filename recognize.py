@@ -7,8 +7,8 @@ from PIL import Image
 
 from utils import *
 
-# sys.path.append(os.path.dirname(os.getcwd() + "\\" + "tamil_ocr" + "\\" + "ocr_tamil"))
-# from ocr_tamil.ocr import OCR
+sys.path.append(os.path.dirname(os.getcwd() + "\\" + "tamil_ocr" + "\\" + "ocr_tamil"))
+from ocr_tamil.ocr import OCR
 
 # sys.path.append(os.path.dirname(os.getcwd() + "\\" + "EasyOCR"))
 # from EasyOCR.easyocr import easyocr
