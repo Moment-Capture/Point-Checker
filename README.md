@@ -66,7 +66,7 @@ python main.py
 
 # 기술 소개
 ## 시스템 구조도
-<p><img width="1000" alt="시스템 아키텍쳐3" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/69b3334a-2893-47d1-b147-8fd58f1ccee2"></p>
+<p><img width="1000" alt="시스템 아키텍쳐" src="https://github.com/Moment-Capture/Point-Checker/assets/112560299/69b3334a-2893-47d1-b147-8fd58f1ccee2"></p>
 </br></br>
 
 - Tkinter GUI를 통해 사용자와 인터렉션
