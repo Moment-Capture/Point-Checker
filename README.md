@@ -151,7 +151,3 @@ python main.py
 ## 참고 자료
 - [2021CapstoneDesign](https://velog.io/@nayeon_p00/series/2021CapstoneDesign) </br>
 </br></br>
-
-
-# 연락처
-질문이나 문제가 있으시면 리포지토리에 이슈를 남기시거나 [momentcaptureteam@gmail.com](mailto:momentcaptureteam@gmail.com)으로 연락주세요.
