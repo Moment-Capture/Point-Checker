@@ -51,12 +51,12 @@ git clone https://github.com/Moment-Capture/Point-Checker.git
 </br>
  
 ## 2. poppler 설치
-2-1. poppler 다운로드 </br>
+### 2-1. poppler 다운로드
 아래 링크에서 최신 버전의 zip 파일을 다운 받고, 압축을 푼다. </br>
 링크: https://github.com/oschwartz10612/poppler-windows/releases/ </br>
 </br>
 
-2-2. 환경변수 설정 </br>
+### 2-2. 환경변수 설정 </br>
 poppler 폴더의 Library 밑이 bin 폴더를 환경변수 PATH에 추가한다. </br>
 
 </br></br>
