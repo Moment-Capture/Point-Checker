@@ -50,7 +50,19 @@ git clone https://github.com/Moment-Capture/Point-Checker.git
 ```
 </br>
  
-## 2. 라이브러리 설치
+## 2. poppler 설치
+2-1. poppler 다운로드
+아래 링크에서 최신 버전의 zip 파일을 다운 받고, 압축을 푼다.
+링크: https://github.com/oschwartz10612/poppler-windows/releases/
+</br>
+
+2-2. 환경변수 설정
+poppler 폴더의 Library 밑이 bin 폴더를 환경변수 PATH에 추가한다.
+
+</br></br>
+
+ 
+## 3. 라이브러리 설치
 ```bash
 pip install -r requirements.txt
 ```
@@ -58,7 +70,7 @@ pip install -r requirements.txt
 - Python 3.9 이상 환경에서 구동 가능합니다.
 </br></br>
 
-## 3. main.py 실행
+## 4. main.py 실행
 ```bash
 python main.py
 ```
